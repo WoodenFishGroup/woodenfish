@@ -1,0 +1,33 @@
+
+<div class="panel panel-default">
+  <ul class="list-group">
+    <% @posts.each do |post| %> 
+      <li class="list-group-item" style="padding:20px">
+        <div class="media">
+          <div style="float:left;padding-right:15px">
+            <img style="width:40px;height:40px;border-radius: 5px;"
+              class="pull-right media-object" 
+              src="http://www.gravatar.com/avatar/<%= Digest::MD5.hexdigest(post.user.email) %>" />
+          </div>
+          <div class="media-body">
+            <div>
+              <h4 class="media-heading"> <%= post.subject %> </h4>
+              <span><%= post.user.name %>, <%= time_ago_in_words(post.created) %> ago</span>
+            </div>
+            <p> <%= simple_format(post.body).html_safe %> </p>
+            <div>
+              <a src="#">add comment (0)</a>
+            </div>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div>
+  <div class="pagination pagination-right" style="vertical-align: middle;">                                      
+    <% cond = {} %>                                                                                              
+    <%= will_paginate @posts, :params => cond, :renderer => BootstrapPagination::Rails %>                    
+  </div>                                                                                                         
+</div>
