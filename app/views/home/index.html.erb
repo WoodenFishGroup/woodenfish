@@ -4,20 +4,25 @@
     <% @posts.each do |post| %> 
       <li class="list-group-item" style="padding:20px">
         <div class="media">
-          <div style="float:left;padding-right:15px">
-            <img style="width:40px;height:40px;border-radius: 5px;"
-              class="pull-right media-object" 
-              src="http://www.gravatar.com/avatar/<%= Digest::MD5.hexdigest(post.user.email) %>" />
+          <div style="float:left;width:60px;margin-right:10px;text-align:center">
+            <a style="font-size:30px" href="#">&#9734;</a><br />
+            <span style="font-size:20px;width:100%;"><%= rand(100) %></span>
           </div>
           <div class="media-body">
-            <div>
-              <h4 class="media-heading"> <%= post.subject %> </h4>
-              <span><%= post.user.name %>, <%= time_ago_in_words(post.created) %> ago</span>
-            </div>
-            <p> <%= simple_format(post.body).html_safe %> </p>
-            <div>
-              <a src="#">add comment (0)</a>
-            </div>
+              <div>
+                <h2 class="media-heading"> <%= post.subject %> </h2>
+                <div style="float:left;padding-right:10px">
+                  <img style="width:40px;height:40px;border-radius: 5px;"
+                    class="pull-right media-object" 
+                    src="http://www.gravatar.com/avatar/<%= Digest::MD5.hexdigest(post.user.email) %>" />
+                </div>
+                <div><%= post.user.name %></div>
+                <div><%= time_ago_in_words(post.created) %> ago</div>
+              </div>
+              <p> <%= simple_format(post.body).html_safe %> </p>
+              <div>
+                <a src="#">add comment (0)</a>
+              </div>
           </div>
         </div>
       </li>
