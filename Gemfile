@@ -45,3 +45,6 @@ gem 'mysql2'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
+
+source  'http://gem.corp.hulu.com/'
+gem  'hulu_sso'
