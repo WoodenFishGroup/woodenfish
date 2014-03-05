@@ -1,4 +1,4 @@
-module Util
+module Utilities
   module Data
     def query_or_create_user(query)
       user = query_user(query)

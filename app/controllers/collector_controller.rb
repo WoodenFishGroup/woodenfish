@@ -1,8 +1,8 @@
 require 'json'
-require 'util/data'
+require 'utilities/data'
 
 class CollectorController < ApplicationController
-  include Util::Data
+  include Utilities::Data
 
   def sample
   end

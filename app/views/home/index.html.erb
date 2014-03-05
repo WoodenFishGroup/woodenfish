@@ -5,12 +5,12 @@
       <li class="list-group-item" style="padding:20px">
         <div class="media">
           <div style="float:left;width:60px;margin-right:10px;text-align:center">
-            <a style="font-size:30px" href="#">&#9734;</a><br />
+            <span style="font-size:30px" href="#">&#9734;</span><br />
             <span style="font-size:20px;width:100%;"><%= rand(100) %></span>
           </div>
           <div class="media-body">
               <div>
-                <h2 class="media-heading"> <%= post.subject %> </h2>
+                <h3 class="media-heading"> <%= post.subject %> </h3>
                 <div style="float:left;padding-right:10px">
                   <img style="width:40px;height:40px;border-radius: 5px;"
                     class="pull-right media-object" 
@@ -21,7 +21,7 @@
               </div>
               <p> <%= simple_format(post.body).html_safe %> </p>
               <div>
-                <a src="#">add comment (0)</a>
+                <a src="#">add comment</a>
               </div>
           </div>
         </div>

@@ -1,4 +1,6 @@
 module ApplicationHelper
+  @@current_user = {}
+
   def set_current_user(user)
     @@current_user = user
   end
