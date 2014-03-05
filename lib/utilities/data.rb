@@ -12,7 +12,7 @@ module Utilities
 
     def query_user(query)
       email = query["email"]
-      User.where(email: email).or("other_emails like ?", "%,#{email},%").first
+      User.where("email='#{email}' or other_emails like '%,#{email},%'").first
     end
 
     def get_name_from_email(email_address)
