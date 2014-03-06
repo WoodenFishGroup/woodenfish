@@ -1,3 +1,16 @@
+<style>
+  a.starred:link {color:#DAA520;}    /* unvisited link */
+  a.starred:visited {color:#DAA520;} /* visited link */
+  a.starred:hover {color:#999999;}   /* mouse over link */
+  a.starred:active {color:#DAA520;}  /* selected link */
+  a.unstarred:link {color:#999999;}    /* unvisited link */
+  a.unstarred:visited {color:#999999;} /* visited link */
+  a.unstarred:hover {color:#DAA520;}   /* mouse over link */
+  a.unstarred:active {color:#999999;}  /* selected link */
+  .poststar {
+    font-size:30px;
+  }
+</style>
 
 <div class="panel panel-default">
   <ul class="list-group">
@@ -5,8 +18,15 @@
       <li class="list-group-item" style="padding:20px">
         <div class="media">
           <div style="float:left;width:60px;margin-right:10px;text-align:center">
-            <span style="font-size:30px" href="#">&#9734;</span><br />
-            <span style="font-size:20px;width:100%;"><%= rand(100) %></span>
+            <div id="poststar-<%= post.id %>">
+              <% starred = post_starred_by_user?(post, get_current_user_id)  %>
+              <%= link_to (starred ? "★" : "☆"), 
+                {:controller => "home", :action => "star_post", :post_id => post.id},
+                :class => "poststar #{(starred ? "starred" : "unstarred")}",
+                :method => :post, :remote => true, :style => "text-decoration:none" %>
+              <br />
+              <span style="font-size:20px;width:100%;"><%= starred_count(post) %></span>
+            </div>
           </div>
           <div class="media-body">
               <div>

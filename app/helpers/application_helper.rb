@@ -1,12 +1,15 @@
+require 'utilities/data'
+
 module ApplicationHelper
+  include Utilities::Data
+
   @@current_user = {}
+  @@current_user_id = nil
 
   def set_current_user(user)
     @@current_user = user
-  end
-
-  def get_current_user
-    @@current_user
+    user = query_or_create_user({"email" => user["email"]})
+    @@current_user_id = user.id
   end
 
   def get_current_user_name
@@ -15,6 +18,10 @@ module ApplicationHelper
 
   def get_current_user_email
     @@current_user["email"]
+  end
+
+  def get_current_user_id
+    @@current_user_id
   end
 
 end

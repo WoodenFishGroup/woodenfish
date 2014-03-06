@@ -1,5 +1,29 @@
 module Utilities
   module Data
+    def change_post_star_status(post, user_id)
+      if post_starred_by_user?(post, user_id)
+        post.starred_by[",#{user_id},"] = ","
+      elsif
+        if post.starred_by
+          post.starred_by = ",#{(post.starred_by.split(',').select{|s| not s.empty?} + [user_id]).join(',')},"
+        elsif
+          post.starred_by = ",#{user_id},"
+        end
+      end
+    end
+
+    def starred_count(post)
+      if post.starred_by
+        post.starred_by.split(',').select{|s| not s.empty?}.size
+      else
+        0
+      end
+    end
+
+    def post_starred_by_user?(post, user_id)
+      post.starred_by && (post.starred_by.include? ",#{user_id},")
+    end
+
     def query_or_create_user(query)
       user = query_user(query)
       if not user

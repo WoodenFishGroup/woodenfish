@@ -1,11 +1,14 @@
 Wf::Application.routes.draw do
-  root 'home#index'  
+  root "home#index"
+
+  post "home/star_post"
+
+  get "/health_check" => "health_check#health_check"
 
   post "collector/feed"
   post "collector/portal_submit"
   get "collector/feed_result"
   get "collector/sample"
-  get "/health_check" => "health_check#health_check"
 
   #get "home/index"
   #resources :home
