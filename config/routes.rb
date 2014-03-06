@@ -5,10 +5,12 @@ Wf::Application.routes.draw do
 
   get "/health_check" => "health_check#health_check"
 
-  post "collector/feed"
-  post "collector/portal_submit"
-  get "collector/feed_result"
-  get "collector/sample"
+  post "posts/feed"
+  post "posts/portal_submit"
+  get "posts/feed_result"
+  get "posts/sample"
+  resources :posts
+  resources :comments
 
   #get "home/index"
   #resources :home
