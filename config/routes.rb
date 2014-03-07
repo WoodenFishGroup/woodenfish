@@ -9,8 +9,10 @@ Wf::Application.routes.draw do
   post "posts/portal_submit"
   get "posts/feed_result"
   get "posts/sample"
-  resources :posts
-  resources :comments
+  resources :posts do 
+    resources :comments, :only => [:index]
+  end
+  resources :comments, :except => [:index]
 
   #get "home/index"
   #resources :home

@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, polymorphic: true
-  belongs_to :post
+  belongs_to :post, :counter_cache => true
   has_many :comments, as: :commentable, counter_cache: true
 
   def self.get_or_create query, user

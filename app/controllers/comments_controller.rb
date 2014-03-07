@@ -3,6 +3,8 @@ require 'utilities/data'
 class CommentsController < ApplicationController
   include Utilities::Data
 
+  COMMENTS_PER_PAGE = 100
+
   def create
     user_info = (params[:user] || {})
     comment_info = {
@@ -10,6 +12,14 @@ class CommentsController < ApplicationController
       "source_id" => Time.now.utc.to_i.to_s
     }.merge(params[:comment] || {})
     create_comment(user_info, comment_info)
+  end
+
+  def index
+    @comments = Comment
+      .where(is_deleted: 0, post_id: params[:post_id].to_i)
+      .order("id DESC")
+      .paginate(page: params[:page], per_page: COMMENTS_PER_PAGE)
+    @post_id = params[:post_id].to_i
   end
 
   private

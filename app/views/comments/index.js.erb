@@ -1,0 +1,1 @@
+$('#post-comment-<%= @post_id %>').html('<%= escape_javascript(render(partial: 'comment', collection: @comments)) %>')
