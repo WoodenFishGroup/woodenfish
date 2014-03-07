@@ -1,3 +1,5 @@
+require 'json'
+
 module Utilities
   module Data
     def change_post_star_status(post, user_id)
@@ -28,7 +30,10 @@ module Utilities
       user = query_user(query)
       if not user
         name = query["name"] || get_name_from_email(query["email"])
-        User.create(:name => name, :email => query["email"], :created => Time.now.utc)
+        email = query["email"]
+        User.create(:name => name, :email => email,
+                    :avartar => query_hulu_employee_avartar(name, email),
+                    :created => Time.now.utc)
         user = query_user(query)
       end
       user
@@ -62,6 +67,20 @@ module Utilities
 
     def query_post(query)
       Post.where(source: query["source"], source_id: query["source_id"]).first
+    end
+
+    private
+    def query_hulu_employee_avartar(name, email)
+      url = 'http://intranet.hulu.com/Contacts/GetContacts2.aspx?office=0'
+      params = {:search => name, :dir => "ASC", :start => 0, :limit => 999, :sort => "name"}
+      resp = Net::HTTP.post_form(URI.parse(url), params)
+      json = JSON.parse(resp.body)
+      #TODO find the most accurate one
+      if json["contacts"].size > 0
+        "http://intranet.hulu.com/#{json["contacts"][0]["photo_file_name"]}"
+      else
+        "http://www.gravatar.com/avatar/a"
+      end
     end
   end
 end
