@@ -4,3 +4,6 @@
 require File.expand_path('../config/application', __FILE__)
 
 Wf::Application.load_tasks
+
+# RAILS_ENV=development QUEUE=* rake resque:work
+# RAILS_ENV=production QUEUE=* rake resque:work

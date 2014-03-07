@@ -1,7 +1,10 @@
 require 'json'
+require 'resque'
+require 'tasks/new_post_notify'
 
 module Utilities
   module Data
+    
     def change_post_star_status(post, user_id)
       if post_starred_by_user?(post, user_id)
         post.starred_by[",#{user_id},"] = ","
@@ -61,6 +64,7 @@ module Utilities
             :source => query["source"],
             :source_id => query["source_id"])
         post = query_post(query)
+        Resque.enqueue(NewPostNotify, post.id)
       end
       post
     end

@@ -1,3 +1,5 @@
+require 'resque/server'
+
 Wf::Application.routes.draw do
   root "home#index"
 
@@ -13,6 +15,8 @@ Wf::Application.routes.draw do
     resources :comments, :only => [:index]
   end
   resources :comments, :except => [:index]
+
+  mount Resque::Server, :at => "/resque"  
 
   #get "home/index"
   #resources :home

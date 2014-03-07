@@ -27,3 +27,7 @@ Wf::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 end
+
+redis = Redis.new(
+  :host => "elsaplogbroker01.server.hulu.com", :port =>6379, :thread_safe => true)
+Resque.redis = Redis::Namespace.new(:wf_staging, :redis => redis)

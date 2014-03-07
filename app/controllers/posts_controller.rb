@@ -7,6 +7,18 @@ class PostsController < ApplicationController
   def sample
   end
 
+  # NOTE: this is for submit testing data from portal page
+  def portal_submit
+    user_info = {"email" => params[:user_email]}
+    post_info = {
+        "subject" => params[:post_subject],
+        "body" => params[:post_body],
+        "source" => "portal",
+        "source_id" => Time.now.utc.to_i.to_s
+    }
+    feed_impl(user_info, post_info)
+  end
+
   # params should look like:
   # {
   # :user => {

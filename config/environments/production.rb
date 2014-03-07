@@ -78,3 +78,7 @@ Wf::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 end
+
+redis = Redis.new(
+  :host => "elsaplogbroker01.server.hulu.com", :port =>6379, :thread_safe => true)
+Resque.redis = Redis::Namespace.new(:wf_production, :redis => redis)
