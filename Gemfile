@@ -48,3 +48,5 @@ gem 'will_paginate-bootstrap'
 
 source  'http://gem.corp.hulu.com/'
 gem  'hulu_sso'
+
+gem 'rails_autolink'

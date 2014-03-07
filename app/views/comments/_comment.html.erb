@@ -1,4 +1,4 @@
-<div class="media-body" style="padding-left: 40px; margin-top: 10px; border-top: 1px solid #bbb; padding-top: 10px;">
+<div class="media-body well well-small" style="margin-top: 10px; border-top: 1px solid #bbb; ">
     <div>
       <div style="float:left;padding-right:10px">
         <img style="width:40px;height:40px;border-radius: 5px;"
@@ -8,5 +8,5 @@
       <div><%= comment.user.name %></div>
       <div><%= time_ago_in_words(comment.created) %> ago</div>
     </div>
-    <p> <%= simple_format(comment.body).html_safe %> </p>
+    <p> <%= auto_link(simple_format(comment.body)).html_safe %> </p>
 </div>
