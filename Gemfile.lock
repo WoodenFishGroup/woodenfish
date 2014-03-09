@@ -51,6 +51,7 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
+    libv8 (3.11.8.17)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -86,6 +87,7 @@ GEM
     redis (3.0.7)
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
+    ref (1.0.4)
     resque (1.25.2)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
@@ -113,6 +115,9 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    therubyracer (0.11.4)
+      libv8 (~> 3.11.8.12)
+      ref
     thor (0.18.1)
     thread_safe (0.1.3)
       atomic
@@ -138,15 +143,18 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.1.1)
   coffee-rails (~> 4.0.0)
+  execjs
   hulu_sso
   jbuilder (~> 1.2)
   jquery-rails
+  libv8 (~> 3.11.8.3)
   mysql2
   rails (= 4.0.3)
   rails_autolink
   resque (~> 1.25.2)
   sass-rails (~> 4.0.0)
   sdoc
+  therubyracer
   turbolinks
   uglifier (>= 1.3.0)
   will_paginate
