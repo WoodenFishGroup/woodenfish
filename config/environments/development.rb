@@ -26,6 +26,10 @@ Wf::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  config.mail_server = {:type => :smtp, :host => "smtp.els.hulu.com", :port => 25}
+  config.notify_from_alias = "woodenfish-staging@hulu.com"
+  config.portal_root = "http://woodenfish.staging.hulu.com/"
 end
 
 redis = Redis.new(

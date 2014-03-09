@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   def sample
   end
 
-  # NOTE: this is for submit testing data from portal page
+  # NOTE: for easier debugging
   def portal_submit
     user_info = {"email" => params[:user_email]}
     post_info = {
@@ -19,18 +19,28 @@ class PostsController < ApplicationController
     feed_impl(user_info, post_info)
   end
 
+  # NOTE: for easier debugging
+  def add_notification
+    require 'resque'
+    require 'tasks/new_post_notify'
+    post_id = params[:post_id]
+    Resque.enqueue(Tasks::NewPostNotify, post_id)
+    post = Post.find_by_id(post_id)
+    render :json => post
+  end
+
   # params should look like:
   # {
-  # :user => {
-  #   :name => ...,
-  #   :email => ...
-  # }, 
-  # :post => {
-  #   :subject => ...,
-  #   :body => ...,
-  #   :source => ...,
-  #   :source_id => ...
-  # }
+  #   :user => {
+  #     :name => ...,
+  #     :email => ...
+  #   }, 
+  #   :post => {
+  #     :subject => ...,
+  #     :body => ...,
+  #     :source => ...,
+  #     :source_id => ...
+  #   }
   # }
   def create
     user_info = (params["user"] || {})
@@ -38,7 +48,6 @@ class PostsController < ApplicationController
       "source" => "portal",
       "source_id" => Time.now.utc.to_i.to_s
     }.merge(params["post"] || {})
-
     feed_impl(user_info, post_info)
   end
 

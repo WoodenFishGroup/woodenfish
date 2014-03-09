@@ -1,4 +1,3 @@
-require 'digest/md5'
 require 'utilities/data'
 
 class HomeController < LoginController

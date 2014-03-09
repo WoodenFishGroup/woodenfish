@@ -11,6 +11,7 @@ Wf::Application.routes.draw do
   post "posts/portal_submit"
   get "posts/feed_result"
   get "posts/sample"
+  get "posts/add_notification"
   resources :posts do 
     resources :comments, :only => [:index]
   end
