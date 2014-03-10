@@ -1,5 +1,5 @@
 require 'resque'
-require 'tasks/notification'
+require 'tasks/new_post_notification'
 
 class Post < ActiveRecord::Base
   belongs_to :user
@@ -60,6 +60,6 @@ class Post < ActiveRecord::Base
   private
   def enqueue_notification
     logger.info "enqueue new post"
-    Resque.enqueue(Tasks::Notification, {notifyable_type: :new_post, notifyable_id: id})
+    Resque.enqueue(Tasks::NewPostNotification, id)
   end
 end

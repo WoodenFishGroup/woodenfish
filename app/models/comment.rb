@@ -1,5 +1,5 @@
 require 'resque'
-require 'tasks/notification'
+require 'tasks/new_comment_notification'
 
 class Comment < ActiveRecord::Base
   belongs_to :user
@@ -43,6 +43,6 @@ class Comment < ActiveRecord::Base
   private
   def enqueue_notification
     logger.info "enqueue new comment"
-    Resque.enqueue(Tasks::Notification, {notifyable_type: :new_comment, notifyable_id: id})
+    Resque.enqueue(Tasks::NewCommentNotification, id)
   end
 end
