@@ -6,7 +6,7 @@
           src="<%= comment.user.avartar.html_safe %>" />
       </div>
       <div><%= comment.user.name %></div>
-      <div><%= time_ago_in_words(comment.created) %> ago</div>
+      <div class="time_text"><%= time_ago_in_words(comment.created) %> ago</div>
     </div>
     <p> <%= auto_link(simple_format(comment.body)).html_safe %> </p>
 </div>

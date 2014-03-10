@@ -37,11 +37,12 @@
                     src="<%= post.user.avartar.html_safe %>" />
                 </div>
                 <div><%= post.user.name %></div>
-                <div><%= time_ago_in_words(post.created) %> ago</div>
+                <div class="time_text"><%= time_ago_in_words(post.created) %> ago</div>
               </div>
               <p> <%= auto_link(simple_format(post.body)).html_safe %> </p>
               <div>
-                <%= link_to "Comments (#{post.comments_count})", 
+                <% comment_count = post.comments_count %>
+                <%= link_to "#{comment_count} comment#{"s" if comment_count > 1}", 
                       post_comments_path(post.id),
                       :method => :get, :remote => true %>
               </div>
