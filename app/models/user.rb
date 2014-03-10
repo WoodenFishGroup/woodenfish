@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
     users = User.find(:all)
     notified_users = []
     users.each do |user|
-      if user.notification
+      if !user.notification.blank?
         notify = JSON.parse(user.notification)
         if notify.fetch('new_post', true)
           notified_users << user
@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
     users = User.find(:all)
     notified_users = []
     users.each do |user|
-      if user.notification
+      if !user.notification.blank?
         notify = JSON.parse(user.notification)
         if notify.fetch('new_comment', true)
           notified_users << user

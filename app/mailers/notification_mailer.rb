@@ -1,11 +1,11 @@
 class NotificationMailer < ActionMailer::Base
-  #default from: Rails.configuration.notify_from_alias
 
   def new_post_notify(post)
     users = User.find_new_post_notified_users
     aliases = users.map{|user| user.email}
     subject = "[Woodenfish] #{post.subject}"
     @post = post
+    logger.info "sending mail to #{aliases.to_s}"
     mail(from: format_from(post.user), bcc: aliases, subject: subject, message_id: post.source_id)
   end
 
@@ -14,7 +14,8 @@ class NotificationMailer < ActionMailer::Base
     aliases = users.map{|user| user.email}
     subject = "Re: [Woodenfish] #{comment.post.subject}"
     @comment = comment
-    mail(from: format_from(post.user), bcc: aliases, subject: subject, message_id: comment.source_id)
+    logger.info "sending mail to #{aliases.to_s}"
+    mail(from: format_from(comment.user), bcc: aliases, subject: subject, message_id: comment.source_id)
   end
 
   private
