@@ -1,9 +1,11 @@
 require 'json'
+require 'resque'
 require 'tasks/new_post_notify'
 
 class PostsController < ApplicationController
 
   def sample
+
   end
 
   # NOTE: for easier debugging
@@ -20,8 +22,6 @@ class PostsController < ApplicationController
 
   # NOTE: for easier debugging
   def add_notification
-    require 'resque'
-    require 'tasks/new_post_notify'
     post_id = params[:post_id]
     Resque.enqueue(Tasks::NewPostNotify, post_id)
     post = Post.find_by_id(post_id)
@@ -57,9 +57,7 @@ class PostsController < ApplicationController
     assert_post_info(post_info)
     user = User.query_or_create_user(user_info)
     post, create = Post.query_or_create_post(post_info, user)
-    #require 'resque'
-    #require 'tasks/new_post_notify'
-    #Resque.enqueue(Tasks::NewPostNotify, post.id) if create
+    Resque.enqueue(Tasks::NewPostNotify, post.id) if create
     render :json => post
   end
 

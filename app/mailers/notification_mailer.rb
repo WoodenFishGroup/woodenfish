@@ -4,7 +4,7 @@ class NotificationMailer < ActionMailer::Base
   def new_post_notify(post)
     users = User.find_new_post_notified_users
     aliases = users.map{|user| user.email}
-    puts "sending mail to: #{aliases}"
+    puts "sending mail to: #{aliases.to_s}"
     subject = "[Woodenfish] #{post.subject}"
     @post = post
     mail(bcc: aliases, subject: subject, message_id: post.source_id)
