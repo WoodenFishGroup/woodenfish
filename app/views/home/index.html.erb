@@ -1,21 +1,33 @@
 <style>
   a.starred:link {color:#DAA520;}    /* unvisited link */
   a.starred:visited {color:#DAA520;} /* visited link */
-  a.starred:hover {color:#999999;}   /* mouse over link */
+  a.starred:hover {color:#dddddd;}   /* mouse over link */
   a.starred:active {color:#DAA520;}  /* selected link */
-  a.unstarred:link {color:#999999;}    /* unvisited link */
-  a.unstarred:visited {color:#999999;} /* visited link */
+  a.unstarred:link {color:#dddddd;}    /* unvisited link */
+  a.unstarred:visited {color:#dddddd;} /* visited link */
   a.unstarred:hover {color:#DAA520;}   /* mouse over link */
-  a.unstarred:active {color:#999999;}  /* selected link */
+  a.unstarred:active {color:#dddddd;}  /* selected link */
   .poststar {
     font-size:30px;
   }
+  .list-group-item {
+    border-radius: 8px;
+    border-radius: 8px;
+  }
+  .list-group-item:first-child {
+    border-radius: 8px;
+    border-radius: 8px;
+  }
+  .list-group-item:last-child {
+    border-radius: 8px;
+    border-radius: 8px;
+  }
 </style>
 
-<div class="panel panel-default">
-  <ul class="list-group">
+<div>
+  <ul class="list-group" style="background-color:#dddddd">
     <% @posts.each do |post| %> 
-      <li class="list-group-item" style="padding:20px">
+      <li class="list-group-item" style="padding:20px;margin-bottom:20px">
         <div class="media">
           <div style="float:left;width:60px;margin-right:10px;text-align:center">
             <div id="poststar-<%= post.id %>">
