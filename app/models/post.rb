@@ -1,6 +1,11 @@
+require 'resque'
+require 'tasks/notification'
+
 class Post < ActiveRecord::Base
   belongs_to :user
   has_many :comments, counter_cache: true
+
+  after_create :enqueue_notification
 
   def starred_count
     if self.starred_by
@@ -50,5 +55,11 @@ class Post < ActiveRecord::Base
 
   def self.query_post(query)
     self.where(source: query["source"], source_id: query["source_id"]).first
+  end
+
+  private
+  def enqueue_notification
+    logger.info "enqueue new post"
+    Resque.enqueue(Tasks::Notification, {notifyable_type: :new_post, notifyable_id: id})
   end
 end

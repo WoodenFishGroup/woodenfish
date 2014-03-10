@@ -1,8 +1,13 @@
+require 'resque'
+require 'tasks/notification'
+
 class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, polymorphic: true
   belongs_to :post, :counter_cache => true
   has_many :comments, as: :commentable, counter_cache: true
+
+  after_create :enqueue_notification
 
   def self.get_or_create query, user
     comment = self.where(source: query["source"], source_id: query["source_id"]).first
@@ -23,6 +28,7 @@ class Comment < ActiveRecord::Base
       if !commentable.nil? && !post.nil?
         comment = Comment.create(
           :body => query["body"],
+          :original_body => query["original_body"].blank? ? query["body"] : query["original_body"],
           :user_id => user.id,
           :created => (if query["created"] then Time.at(query["created"]) else Time.now.utc end),
           :commentable => commentable,
@@ -32,5 +38,11 @@ class Comment < ActiveRecord::Base
       end
     end
     comment 
+  end
+
+  private
+  def enqueue_notification
+    logger.info "enqueue new comment"
+    Resque.enqueue(Tasks::Notification, {notifyable_type: :new_comment, notifyable_id: id})
   end
 end

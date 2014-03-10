@@ -19,6 +19,23 @@ class User < ActiveRecord::Base
     notified_users
   end
 
+  def self.find_new_comment_notified_users
+    # TODO may need cache
+    users = User.find(:all)
+    notified_users = []
+    users.each do |user|
+      if user.notification
+        notify = JSON.parse(user.notification)
+        if notify.fetch('new_comment', true)
+          notified_users << user
+        end
+      else
+        notified_users << user
+      end
+    end
+    notified_users
+  end
+
   def self.query_or_create_user(query)
     user = query_user(query)
     if not user

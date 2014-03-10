@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head> <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' /> </head>
+<body>
+
+<div class="panel panel-default" style="margin-bottom: 20px;border: 1px solid transparent;border-radius: 4px;background-color: #fff;border-color: #ddd;">
+  <ul class="list-group" style="padding-left: 0;margin-bottom: 20px;">
+    <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">
+      <div>
+        <h2><%= @comment.user.name %><small> via email</small></h2>
+      </div>
+      <div><%= Rails.configuration.portal_root %></div>
+    </li>
+    <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">
+      <div> <%= @comment.original_body.html_safe %> </div>
+    </li>
+
+    <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">
+      <p>
+      Reply directly to comment<br/>
+      Check all posts: <%= Rails.configuration.portal_root %><br/>
+      Feecback: woodenfish-dev@hulu.com<br/>
+      Git: http://git.hulu.com/cgit/woodenfish.git/ http://git.hulu.com/cgit/woodenfish-portal.git/ <br/>
+      <br/>
+      Guidelines<br/>
+      - Recent reading is preferred. Past reading is fine, too.<br/>
+      - Recommend attaching notes for easier reading.<br/>
+      - This is a private group, rights and duties are interrelated.<br/>
+      <br/>
+      Woodenfish
+      </p>
+    </li>
+  </ul>
+</body>
+</html>
