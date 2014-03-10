@@ -14,12 +14,8 @@ class Post < ActiveRecord::Base
     self.starred_by && (self.starred_by.include? ",#{user_id},")
   end
 
-  def self.query_by_source source, source_id
-    self.where(source: source, source_id: source_id).first
-  end
-
-  def self.change_post_star_status(post, user_id)
-    if post_starred_by_user?(post, user_id)
+  def self.change_star_status(post, user_id)
+    if post.starred_by_user?(user_id)
       post.starred_by[",#{user_id},"] = ","
     elsif
       if post.starred_by
@@ -28,6 +24,10 @@ class Post < ActiveRecord::Base
         post.starred_by = ",#{user_id},"
       end
     end
+  end
+
+  def self.query_by_source source, source_id
+    self.where(source: source, source_id: source_id).first
   end
 
   def self.query_or_create_post(query, user)
