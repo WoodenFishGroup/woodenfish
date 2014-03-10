@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+<div><h4><%= @post.user.name %></h4> via Email</div>
+<div><%= Rails.configuration.portal_root %></div>
+
+<p> <%= auto_link(simple_format(@post.body)).html_safe %> </p>
+
+<p>
+Reply directly to comment<br/>
+Check all posts: <%= Rails.configuration.portal_root %><br/>
+Feecback: woodenfish-dev@hulu.com<br/>
+Git: http://git.hulu.com/cgit/woodenfish.git/ http://git.hulu.com/cgit/woodenfish-portal.git/ <br/>
+<br/>
+Guidelines<br/>
+- Recent reading is preferred. Past reading is fine, too.<br/>
+- Recommend attaching notes for easier reading.<br/>
+- This is a private group, rights and duties are interrelated.<br/>
+<br/>
+Woodenfish
+</p>
+
+  </body>
+</html>

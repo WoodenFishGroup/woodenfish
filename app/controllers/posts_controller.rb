@@ -1,8 +1,7 @@
 require 'json'
-require 'utilities/data'
+require 'tasks/new_post_notify'
 
 class PostsController < ApplicationController
-  include Utilities::Data
 
   def sample
   end
@@ -56,8 +55,11 @@ class PostsController < ApplicationController
   def feed_impl(user_info, post_info)
     assert_user_info(user_info)
     assert_post_info(post_info)
-    user = query_or_create_user(user_info)
-    post = query_or_create_post(post_info, user)
+    user = User.query_or_create_user(user_info)
+    post, create = Post.query_or_create_post(post_info, user)
+    #require 'resque'
+    #require 'tasks/new_post_notify'
+    #Resque.enqueue(Tasks::NewPostNotify, post.id) if create
     render :json => post
   end
 

@@ -78,7 +78,11 @@ Wf::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.mail_server = {:type => :smtp, :host => "smtp.els.hulu.com", :port => 25}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              'smtp.els.hulu.com',
+      port:                 25
+  }
   config.notify_from_alias = "woodenfish@hulu.com"
   config.portal_root = "http://woodenfish.prod.hulu.com/"
 end

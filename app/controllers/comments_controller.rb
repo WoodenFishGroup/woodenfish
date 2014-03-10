@@ -1,7 +1,4 @@
-require 'utilities/data'
-
 class CommentsController < ApplicationController
-  include Utilities::Data
 
   COMMENTS_PER_PAGE = 100
 
@@ -27,7 +24,7 @@ class CommentsController < ApplicationController
   def create_comment(user_info, comment_info)
     assert_user_info(user_info)
     assert_comment_info(comment_info)
-    user = query_or_create_user(user_info)
+    user = User.query_or_create_user(user_info)
     comment = Comment.get_or_create(comment_info, user)
     render :json => comment.to_json
   end

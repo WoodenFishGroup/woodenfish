@@ -1,14 +1,11 @@
-require 'utilities/data'
 
 module ApplicationHelper
-  include Utilities::Data
-
   @@current_user_sso = {}
   @@current_user = nil
 
   def set_current_user_sso(user_sso)
     @@current_user_sso = user_sso
-    user = query_or_create_user({"email" => user_sso["email"]})
+    user = User.query_or_create_user({"email" => user_sso["email"]})
     set_current_user(user)
   end
 
