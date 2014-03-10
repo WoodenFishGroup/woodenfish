@@ -1,12 +1,19 @@
-<div class="media-body well well-small" style="margin-top: 10px; border-top: 1px solid #bbb; ">
-    <div>
-      <div style="float:left;padding-right:10px">
-        <img style="width:40px;height:40px;border-radius: 5px;"
-          class="pull-right media-object" 
-          src="<%= comment.user.avartar.html_safe %>" />
-      </div>
-      <div><%= comment.user.name %></div>
-      <div class="time_text"><%= time_ago_in_words(comment.created) %> ago</div>
+<div class="media-body"
+  style="padding-top:10px;margin-top: 10px; margin-right:20px; border-bottom:1px dotted #dddddd ">
+    <div style="float:left;padding-right:10px">
+      <img style="width:40px;height:40px;border-radius: 5px;"
+        class="pull-right media-object" 
+        src="<%= comment.user.avartar.html_safe %>" />
     </div>
-    <p> <%= auto_link(simple_format(comment.body)).html_safe %> </p>
+    <div style="">
+      <div>
+        <b><%= comment.user.name %></b>
+        <span class="time_text">
+          <%= time_ago_in_words(comment.created) %> ago
+        </span>
+      </div>
+      <div>
+        <%= auto_link(simple_format(comment.body)).html_safe %>
+      </div>
+    </div>
 </div>
