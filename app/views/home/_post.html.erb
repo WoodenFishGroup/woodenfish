@@ -1,0 +1,43 @@
+<% is_view = (mode == "view")%>
+
+<%= form_tag "home/save_post", :method => "PUT" do %>
+  <input type="hidden" name="post_id" value="<%= post.id %>" />
+
+  <div style="float:right;width:60px;text-align:center;vertical-align:middle">
+    <% if post.user_id == get_current_user_id %>
+      <% if is_view %>
+        <%= link_to "edit", {:controller => "home", :action => "edit_post", :post_id => post.id},
+          :method => :get, :remote => true, :style => "color:#dddddd" %>
+      <% else %>
+        <%= submit_tag "save" %>
+      <% end %>
+    <% end %>
+  </div>
+  <div style="margin-right:60px">
+    <div>
+      <div>
+          <% if is_view %>
+            <h3 class="media-heading"> <%= post.subject %> </h3>
+          <% else %>
+            <h3 class="media-heading"> <%= text_field_tag :post_subject, post.subject, :style => "width:100%" %> </h3>
+          <% end %>
+      </div>
+      <div style="padding-bottom:10px;padding-top:10px">
+        <div style="float:left;padding-right:10px">
+          <img style="width:40px;height:40px;border-radius: 5px;"
+            class="pull-right media-object" 
+            src="<%= post.user.avartar.html_safe %>" />
+        </div>
+        <div><b><%= post.user.name %></b></div>
+        <div class="time_text"><%= time_ago_in_words(post.created) %> ago</div>
+      </div>
+    </div>
+    <div style="padding-top:10px;padding-bottom:10px;margin-top:10px;margin-bottom:10px;border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd">
+      <% if is_view %>
+        <%= auto_link(simple_format(post.body)).html_safe %>
+      <% else %>
+        <%= text_area_tag :post_body, post.body, :rows => post.body.count("\n"), :style => "width:100%" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

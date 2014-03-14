@@ -5,7 +5,6 @@ require 'tasks/new_post_notification'
 class PostsController < ApplicationController
 
   def sample
-
   end
 
   # NOTE: for easier debugging

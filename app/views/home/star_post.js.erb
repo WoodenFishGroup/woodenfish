@@ -1,1 +1,1 @@
-$('#poststar-<%= @post_id %>').html('<%=j render partial: 'home/star', locals: { :post_id => @post_id } %>')
+$('#post-star-<%= @post_id %>').html('<%=j render partial: 'home/star', locals: { :post => @post } %>')

@@ -4,6 +4,23 @@ class HomeController < LoginController
     @posts = Post.where("is_deleted=0").paginate(:page => params[:page], :per_page => 20).order("id DESC")
   end
 
+  def edit_post
+    @post_id = params[:post_id]
+    @post = Post.find(params[:post_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def save_post
+    post_id = params[:post_id]
+    subject = params[:post_subject]
+    body = params[:post_body]
+    Post.update(post_id, :subject => subject, :body => body)
+    @post = Post.find(post_id)
+    redirect_to :action => 'index'
+  end
+
   def star_post
     @post_id = params[:post_id]
     @post = Post.where("id=#{@post_id}").first
