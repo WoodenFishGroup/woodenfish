@@ -8,11 +8,6 @@ Wf::Application.routes.draw do
   get  "home/edit_post"
   put  "home/save_post"
 
-  resources :posts do 
-    resources :comments, :only => [:index]
-  end
-  resources :comments, :except => [:index]
-
   post "posts/feed"
 
   # NOTE for debugging
@@ -21,6 +16,11 @@ Wf::Application.routes.draw do
   get  "posts/sample"
   get  "posts/add_notification"
   get  "posts/test"
+
+  resources :posts do 
+    resources :comments, :only => [:index]
+  end
+  resources :comments, :except => [:index]
 
   mount Resque::Server, :at => "/resque"  
 
