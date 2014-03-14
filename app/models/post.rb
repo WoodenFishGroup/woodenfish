@@ -40,11 +40,11 @@ class Post < ActiveRecord::Base
     create = false
     if not post
       Post.create(
-          :subject => query["subject"],
-          :body => query["body"],
+          :subject => query["subject"].strip,
+          :body => query["body"].strip,
           :user_id => user.id,
           :created => (if query["created"] then Time.at(query["created"]) else Time.now.utc end),
-          :tags => query["tags"],
+          :tags => query["tags"].strip,
           :source => query["source"],
           :source_id => query["source_id"])
       post = query_post(query)
