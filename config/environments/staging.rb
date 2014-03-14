@@ -34,7 +34,7 @@ Wf::Application.configure do
   }
   config.notify_from_alias = "woodenfish-staging@hulu.com"
   config.portal_root = "http://woodenfish.staging.hulu.com/"
-  config.ga_id = "fake"
+  config.ga_id = "UA-48995483-2"
 end
 
 redis = Redis.new(
