@@ -86,6 +86,15 @@ Wf::Application.configure do
   config.notify_from_alias = "woodenfish@hulu.com"
   config.portal_root = "http://woodenfish.prod.hulu.com/"
   config.ga_id = "UA-48995483-1"
+
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      email_prefix: '[ERROR-WoodenFish] ',
+      sender_address: 'exceptions@hulu.com',
+      exception_recipients: 'woodenfish-dev@hulu.com'
+    }
 end
 
 redis = Redis.new(

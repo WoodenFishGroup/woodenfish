@@ -39,6 +39,9 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     erubis (2.7.0)
+    exception_notification (4.0.1)
+      actionmailer (>= 3.0.4)
+      activesupport (>= 3.0.4)
     execjs (2.0.2)
     hike (1.2.3)
     hulu_sso (0.1.219)
@@ -143,6 +146,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.1.1)
   coffee-rails (~> 4.0.0)
+  exception_notification
   execjs
   hulu_sso
   jbuilder (~> 1.2)

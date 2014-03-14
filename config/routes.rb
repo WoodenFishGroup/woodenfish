@@ -20,6 +20,7 @@ Wf::Application.routes.draw do
   get  "posts/feed_result"
   get  "posts/sample"
   get  "posts/add_notification"
+  get  "posts/test"
 
   mount Resque::Server, :at => "/resque"  
 

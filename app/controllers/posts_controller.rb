@@ -4,6 +4,10 @@ require 'tasks/new_post_notification'
 
 class PostsController < ApplicationController
 
+  def test
+    raise "test exception notifier"
+  end
+
   def sample
   end
 

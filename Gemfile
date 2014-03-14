@@ -55,3 +55,4 @@ gem 'rails_autolink'
 source  'http://gem.corp.hulu.com/'
 gem  'hulu_sso'
 
+gem 'exception_notification'
