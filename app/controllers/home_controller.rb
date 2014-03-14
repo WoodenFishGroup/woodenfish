@@ -16,7 +16,7 @@ class HomeController < LoginController
     post_id = params[:post_id]
     subject = params[:post_subject]
     body = params[:post_body]
-    Post.update(post_id, :subject => subject, :body => body)
+    Post.update(post_id, :subject => subject, :body => body, :modified_by => get_current_user_id, :modified => Time.now.utc)
     @post = Post.find(post_id)
     redirect_to :action => 'index'
   end
