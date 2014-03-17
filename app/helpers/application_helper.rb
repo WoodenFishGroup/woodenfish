@@ -29,4 +29,9 @@ module ApplicationHelper
     @@current_user ? @@current_user.avartar : "http://www.gravatar.com/avatar/a"
   end
 
+  def clear_current_user_and_sso
+    @@current_user_sso = {}
+    @@current_user = nil
+  end
+
 end
