@@ -4,10 +4,6 @@ require 'tasks/new_post_notification'
 
 class PostsController < ApplicationController
 
-  def test
-    raise "test exception notifier"
-  end
-
   def sample
   end
 
@@ -70,6 +66,4 @@ class PostsController < ApplicationController
   def assert_user_info(info)
     raise "wrong user info" if not info_has_all_values?(info, ["email"])
   end
-
 end
-

@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
 
   protected
   def info_has_all_values?(info, keys)
-    (info.values_at(*keys).index {|v| v.nil? || v.empty?}).nil?
+    (info.values_at(*keys).index {|v| v.nil? || v == ""}).nil?
   end
 end

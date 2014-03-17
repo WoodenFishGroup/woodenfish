@@ -5,6 +5,8 @@ module Tasks
     def self.perform(post_id)
       post_id = post_id.to_i
       Rails.logger.info "new post notify: #{post_id}"
+      # wait to avoid mysql sync delay between master and slave
+      sleep(1)
       post = Post.find_by_id(post_id)
       if not post
         Rails.logger.info "  no post: #{post_id}"

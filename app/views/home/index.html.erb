@@ -38,13 +38,32 @@
             <div id="post-body-<%= post.id %>">
               <%= render :partial => 'home/post', :locals => {:post => post, :mode => "view"} %>
             </div>
-            <div>
-                <% comment_count = post.comments_count %>
-                <%= link_to "#{comment_count} comment#{"s" if comment_count > 1}", 
-                      post_comments_path(post.id),
-                      :method => :get, :remote => true %>
-            </div>
-            <div id="post-comment-<%= post.id %>">
+            <div id="post-comment-section-<%= post.id %>">
+              <div id="post-comment-<%= post.id %>">
+                  <% comment_count = post.comments_count %>
+                  <% if comment_count > 0 %>
+                    <%= link_to "#{comment_count} comment#{"s" if comment_count > 1}", 
+                          post_comments_path(post.id),
+                          :method => :get, :remote => true %>
+                  <% end %>
+              </div>
+              <div style="margin-right:60px;margin-top:10px">
+                <script>
+                  $(function(){
+                    $('#comment-form-<%= post.id %>').bind('ajax:success', function(xhr, data, status){
+                      $('#comment-body-<%= post.id %>').val("")
+                      $.get('<%= post_comments_path(post.id) %>')
+                    });
+                  });
+                </script>
+                <%= form_tag "comments", :id => "comment-form-#{post.id}",
+                    :remote => true, :method => "POST" do %>
+                  <input type="hidden" name="post_id" value="<%= post.id %>" />
+                  <%= text_field_tag :comment_body, "", :id => "comment-body-#{post.id}",
+                      :placeholder => "comment here...",
+                      :style => "height:30px;width:100%;padding:5px;border:1px solid #dddddd" %>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>

@@ -7,12 +7,16 @@
   <ul class="list-group" style="padding-left: 0;margin-bottom: 20px;">
     <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">
       <div>
-        <h2>commented by <%= @comment.user.name %><small> via email</small></h2>
+        <h2><%= @comment.user.name %> commented<small> via email</small></h2>
       </div>
       <div><%= Rails.configuration.portal_root %></div>
     </li>
     <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">
       <div> <%= @comment.original_body.html_safe %> </div>
+    </li>
+    <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">
+      <p><b>Post:</b></p>
+      <p> <%= auto_link(simple_format(@post.body)).html_safe %> </p>
     </li>
 
     <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">
@@ -29,7 +33,7 @@
 <br />
 <b>Misc</b><br/>
 Share by sending to: woodenfish@hulu.com<br />
-Portal: http://woodenfish.prod.hulu.com/<br />
+<b>Star</b> and view posts on portal: http://woodenfish.prod.hulu.com/<br />
 Feecback: woodenfish-dev@hulu.com<br />
 Git: http://git.hulu.com/cgit/woodenfish.git/ http://git.hulu.com/cgit/woodenfish-portal.git/<br />
 <br/>

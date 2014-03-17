@@ -15,7 +15,7 @@ class NotificationMailer < ActionMailer::Base
   def new_comment_notify(comment)
     users = User.find_new_comment_notified_users
     aliases = users.map{|user| user.email}
-    subject = "Re: [Woodenfish] #{comment.post.subject}"
+    subject = "[Woodenfish] Comment: #{comment.post.subject}"
     @comment = comment
     logger.info "sending mail to #{aliases.to_s}"
     mail(from: format_from(comment.user),

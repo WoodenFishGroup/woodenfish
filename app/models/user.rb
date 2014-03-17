@@ -50,8 +50,12 @@ class User < ActiveRecord::Base
   end
 
   def self.query_user(query)
-    email = query["email"]
-    User.where("email='#{email}' or other_emails like '%,#{email},%'").first
+    if query.include?("id")
+      User.find(query["id"])
+    else
+      email = query["email"]
+      User.where("email='#{email}' or other_emails like '%,#{email},%'").first
+    end
   end
 
   def self.get_name_from_email(email_address)

@@ -12,7 +12,6 @@ class Comment < ActiveRecord::Base
   def self.get_or_create query, user
     comment = self.where(source: query["source"], source_id: query["source_id"]).first
     if comment.nil?
-      puts query
       if !query["post_id"].blank?
         commentable = Post.find(query["post_id"])
         post = commentable
