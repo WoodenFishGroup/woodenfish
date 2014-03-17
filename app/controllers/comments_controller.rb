@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   COMMENTS_PER_PAGE = 100
 
   def create
-    user_info = (params[:user] || {"id" => get_current_user_id })
+    user_info = (params[:user] || {"id" => params[:user_id]})
     comment_info = {
       "source" => "portal_comment",
       "source_id" => "#{Time.now.utc.to_i}@woodenfish.hulu.com"
