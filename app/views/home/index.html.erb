@@ -72,10 +72,7 @@
     <% end %>
   </ul>
 </div>
-
 <div>
-  <div class="pagination pagination-right" style="vertical-align: middle;">                                      
-    <% cond = {} %>                                                                                              
-    <%= will_paginate @posts, :params => cond, :renderer => BootstrapPagination::Rails %>                    
-  </div>                                                                                                         
-</div>
+  <% cond = {} %>
+  <%= will_paginate @posts, :params => cond, :renderer => BootstrapPagination::Rails, :class => "pager" %>
+</div>                                                                                                         
