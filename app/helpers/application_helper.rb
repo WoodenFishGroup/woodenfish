@@ -22,7 +22,11 @@ module ApplicationHelper
   end
 
   def get_current_user_id
-    @@current_user.id
+    if @@current_user
+      @@current_user.id
+    else
+      nil
+    end
   end
 
   def get_current_user_avartar
