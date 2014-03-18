@@ -1,4 +1,5 @@
 class NotificationMailer < ActionMailer::Base
+  add_template_helper(ApplicationHelper)
 
   def new_post_notify(post)
     users = User.find_new_post_notified_users

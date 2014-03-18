@@ -3,6 +3,10 @@ module ApplicationHelper
   @@current_user_sso = {}
   @@current_user = nil
 
+  def is_mail_safe_image?(url)
+    url.include?("http://www.gravatar.com/avatar/")
+  end
+
   def set_current_user_sso(user_sso)
     @@current_user_sso = user_sso
     user = User.query_or_create_user({"email" => user_sso["email"]})

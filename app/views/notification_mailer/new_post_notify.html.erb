@@ -7,9 +7,16 @@
   <ul class="list-group" style="padding-left: 0;margin-bottom: 20px;">
     <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">
       <div>
-        <h2><%= @post.subject %></h2>
-        <b><%= @post.user.name %> via email</b>
+        <div><h1><%= @post.subject %></h1></div>
+        <div style="float:left;padding-right:10px">
+          <% if is_mail_safe_image?(@post.user.avartar) %>
+            <img style="width:40px;height:40px;border-radius: 5px;" src="<%= @post.user.avartar.html_safe %>" />
+          <% end %>
+        </div>
+        <div style="font-size:14px"><b><%= @post.user.name %></b></div>
+        <div style="font-size:14px;color:#aaaaaa"><b>via email</b></div>
       </div>
+      <br/>
       <div><%= Rails.configuration.portal_root %></div>
     </li>
     <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">

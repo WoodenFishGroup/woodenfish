@@ -7,12 +7,21 @@
   <ul class="list-group" style="padding-left: 0;margin-bottom: 20px;">
     <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">
       <div>
-        <h2><%= @comment.user.name %> commented<small> via email</small></h2>
+        <div><h1><%= @comment.post.subject %></h1></div>
+        <div style="float:left;padding-right:10px">
+          <% if is_mail_safe_image?(@comment.user.avartar) %>
+            <img style="width:40px;height:40px;border-radius: 5px;" src="<%= @comment.user.avartar.html_safe %>" />
+          <% end %>
+        </div>
+        <div style="font-size:14px"><b><%= @comment.user.name %></b></div>
+        <div style="font-size:14px;color:#aaaaaa"><b>via email</b></div>
       </div>
+      <br/>
       <div><%= Rails.configuration.portal_root %></div>
     </li>
     <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">
-      <div> <%= @comment.original_body.html_safe %> </div>
+      <p><b>Comment:</b></p>
+      <p> <%= @comment.original_body.html_safe %> </p>
     </li>
     <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd;">
       <p><b>Post:</b></p>
