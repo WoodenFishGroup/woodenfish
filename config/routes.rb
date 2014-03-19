@@ -7,6 +7,7 @@ Wf::Application.routes.draw do
   post "home/star_post"
   get  "home/edit_post"
   put  "home/save_post"
+  put  "home/save_profile"
 
   post "posts/feed"
 

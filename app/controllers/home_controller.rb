@@ -5,6 +5,12 @@ class HomeController < LoginController
         :page => params[:page], :per_page => 20).order("id DESC")
   end
 
+  def save_profile
+    avartar = params[:avartar]
+    User.update(get_current_user_id, :avartar => avartar)
+    redirect_to :action => 'index'
+  end
+
   def edit_post
     @post_id = params[:post_id]
     @post = Post.find(params[:post_id])

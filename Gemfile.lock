@@ -38,6 +38,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    commonjs (0.2.6)
     erubis (2.7.0)
     exception_notification (4.0.1)
       actionmailer (>= 3.0.4)
@@ -54,6 +55,11 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
+    less (2.3.2)
+      commonjs (~> 0.2.6)
+    less-rails (2.3.3)
+      actionpack (>= 3.1)
+      less (~> 2.3.1)
     libv8 (3.11.8.17)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -130,6 +136,11 @@ GEM
       polyglot (>= 0.3.1)
     turbolinks (2.2.1)
       coffee-rails
+    twitter-bootstrap-rails (2.2.8)
+      actionpack (>= 3.1)
+      execjs
+      rails (>= 3.1)
+      railties (>= 3.1)
     tzinfo (0.3.38)
     uglifier (2.4.0)
       execjs (>= 0.3.0)
@@ -151,6 +162,7 @@ DEPENDENCIES
   hulu_sso
   jbuilder (~> 1.2)
   jquery-rails
+  less-rails
   libv8 (~> 3.11.8.3)
   mysql2
   rails (= 4.0.3)
@@ -160,6 +172,7 @@ DEPENDENCIES
   sdoc
   therubyracer
   turbolinks
+  twitter-bootstrap-rails
   uglifier (>= 1.3.0)
   will_paginate
   will_paginate-bootstrap

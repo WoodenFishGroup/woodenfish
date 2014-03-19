@@ -3,7 +3,7 @@
 <%= form_tag "home/save_post", :method => "PUT" do %>
   <input type="hidden" name="post_id" value="<%= post.id %>" />
 
-  <div style="float:right;width:60px;text-align:center;vertical-align:middle">
+  <div style="margin-top:10px;float:right;width:60px;text-align:center;vertical-align:middle">
     <% if post.user_id == get_current_user_id %>
       <% if is_view %>
         <%= link_to "edit", {:controller => "home", :action => "edit_post", :post_id => post.id},

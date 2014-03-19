@@ -28,15 +28,28 @@
           <ul class="nav">
           </ul>
         </div>
-        <div style="float:right;padding:10px">
-          <img style="width:30px;height:30px;border-radius: 5px;" 
-             src="<%= get_current_user_avartar.html_safe %>" />
-        </div>
-        <div style="float:right" class="navbar-brand">
-          <%= get_current_user_name %>
+        <div id="user_profile">
+          <%= render :partial => 'layouts/profile' %>
         </div>
       </div>
     </div>
+  </div>
+  <div class="modal fade" id="modal_user" style="top:30%;left:44%;width:59%;height:25%">
+    <%= form_tag "home/save_profile", :id => "profile_form", :method => "PUT" do %>
+      <div class="modal-header">
+        <h3>Edit Profile</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+          Avartar: <%= text_field_tag :avartar, get_current_user_avartar, :style => "width:500px" %>
+        </p>
+        <p>
+          <%= submit_tag "save", :id => "save_profile" %>
+        </p>
+      </div>
+      <div class="modal-footer">
+      </div>
+    <% end %>
   </div>
   <div class="container" style="width:75%">
     <%= yield %>

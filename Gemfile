@@ -51,6 +51,8 @@ gem "execjs"
 gem 'libv8', '~> 3.11.8.3'
 gem "therubyracer"
 gem 'rails_autolink'
+gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem "twitter-bootstrap-rails"
 
 source  'http://gem.corp.hulu.com/'
 gem  'hulu_sso'

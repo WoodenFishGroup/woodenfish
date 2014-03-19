@@ -1,5 +1,6 @@
 <% post ||= @post %>
 <% starred = post.starred_by_user?(get_current_user_id)  %>
+<br />
 <%= link_to (starred ? "★" : "☆"), 
   {:controller => "home", :action => "star_post", :post_id => post.id},
   :class => "poststar #{(starred ? "starred" : "unstarred")}",
