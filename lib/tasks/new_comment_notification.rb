@@ -12,7 +12,9 @@ module Tasks
         Rails.logger.info "  no comment: #{comment_id}"
         return
       end
-      Rails.logger.info "  subject: #{comment.post.subject}"
+      Rails.logger.info "  post: #{comment.post.subject}"
+      Rails.logger.info "  commentted by: #{comment.user.name}"
+      Rails.logger.info "  body: #{comment.body}"
       begin
         NotificationMailer.new_comment_notify(comment).deliver
       rescue Exception => e

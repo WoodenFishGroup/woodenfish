@@ -13,6 +13,7 @@ module Tasks
         return
       end
       Rails.logger.info "  subject: #{post.subject}"
+      Rails.logger.info "  user: #{post.user.name}"
       begin
         NotificationMailer.new_post_notify(post).deliver
       rescue Exception => e
