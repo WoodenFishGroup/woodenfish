@@ -14,7 +14,7 @@ class PostsController < ApplicationController
         "subject" => params[:post_subject],
         "body" => params[:post_body],
         "source" => "portal",
-        "source_id" => Time.now.utc.to_i.to_s
+        "source_id" => "post-#{Time.now.utc.to_i}@woodenfish.hulu.com"
     }
     feed_impl(user_info, post_info)
   end

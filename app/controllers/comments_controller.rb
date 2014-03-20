@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
     user_info = (params[:user] || {"id" => params[:user_id]})
     comment_info = {
       "source" => "portal_comment",
-      "source_id" => "#{Time.now.utc.to_i}@woodenfish.hulu.com"
+      "source_id" => "comment-#{Time.now.utc.to_i}@woodenfish.hulu.com"
     }.merge(params[:comment] || {})
     comment_info = comment_info.merge({"body" => params[:comment_body]}) if params[:comment_body]
     comment_info = comment_info.merge({"post_id" => params[:post_id]}) if params[:post_id]

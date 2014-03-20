@@ -14,7 +14,7 @@
           <% end %>
         </div>
         <div style="font-size:14px"><b><%= @comment.user.name %></b></div>
-        <div style="font-size:14px;color:#aaaaaa"><b>via email</b></div>
+        <div style="font-size:14px;color:#aaaaaa"><b>via <%= @comment.human_readable_source %></b></div>
       </div>
       <br/>
       <div><%= Rails.configuration.portal_root %></div>

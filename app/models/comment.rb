@@ -9,17 +9,25 @@ class Comment < ActiveRecord::Base
 
   after_create :enqueue_notification
 
+  def human_readable_source
+    case source
+    when "email" then "email"
+    when "portal_comment" then "portal"
+    else "unknown"
+    end
+  end
+
   def self.get_or_create query, user
-    comment = self.where(source: query["source"], source_id: query["source_id"]).first
+    comment = self.where(source_id: query["source_id"]).first
     if comment.nil?
       if !query["post_id"].blank?
         commentable = Post.find(query["post_id"])
         post = commentable
       else
-        commentable = Post.where(source: query["source"], source_id: query["commentable_source_id"]).first
+        commentable = Post.where(source_id: query["commentable_source_id"]).first
         post = commentable
         if commentable.nil?
-          commentable = Comment.where(source: query["source"], source_id: query["commentable_source_id"]).first
+          commentable = Comment.where(source_id: query["commentable_source_id"]).first
           post = commentable.post if commentable
         end
       end

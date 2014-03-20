@@ -31,10 +31,6 @@ class Post < ActiveRecord::Base
     end
   end
 
-  def self.query_by_source source, source_id
-    self.where(source: source, source_id: source_id).first
-  end
-
   def self.query_or_create_post(query, user)
     post = query_post(query)
     create = false
@@ -54,7 +50,7 @@ class Post < ActiveRecord::Base
   end
 
   def self.query_post(query)
-    self.where(source: query["source"], source_id: query["source_id"]).first
+    self.where(source_id: query["source_id"]).first
   end
 
   private
