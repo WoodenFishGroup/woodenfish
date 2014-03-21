@@ -43,7 +43,7 @@ class PostsController < LoginController
     body = params[:post_body]
     Post.update(post_id, :subject => subject, :body => body, :modified_by => get_current_user_id, :modified => Time.now.utc)
     @post = Post.find(post_id)
-    redirect_to :controller => "home", :action => 'index'
+    redirect_to root_path
   end
 
   # NOTE: for easier debugging
