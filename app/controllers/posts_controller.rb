@@ -4,6 +4,10 @@ require 'tasks/new_post_notification'
 
 class PostsController < LoginController
   def sample
+    #post = Post.find_by_id(89)
+    #NotificationMailer.new_post_notify(post).deliver
+    #comment = Comment.find_by_id(47)
+    #NotificationMailer.new_comment_notify(comment).deliver
   end
 
   def stared

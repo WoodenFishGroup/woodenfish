@@ -18,11 +18,19 @@ module ApplicationHelper
   end
 
   def get_current_user_name
-    "#{@current_user_sso["first_name"]} #{@current_user_sso["last_name"]}"
+    if @current_user_sso
+      "#{@current_user_sso["first_name"]} #{@current_user_sso["last_name"]}"
+    else
+      "unknown"
+    end
   end
 
   def get_current_user_email
-    @current_user_sso["email"]
+    if @current_user_sso
+      @current_user_sso["email"]
+    else
+      ""
+    end
   end
 
   def get_current_user_id

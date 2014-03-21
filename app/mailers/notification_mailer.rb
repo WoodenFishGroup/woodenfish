@@ -1,10 +1,25 @@
 class NotificationMailer < ActionMailer::Base
+  layout 'mail'
   add_template_helper(ApplicationHelper)
+
+  def summary(user, new_posts, new_comments)
+    return if new_posts.size + new_comments.size == 0
+    post_str = (new_posts.size > 0 ? "#{new_posts.size} posts" : "")
+    comment_str = (new_comments.size > 0 ? "#{new_comments.size} comments" : "")
+    subject = "[Woodenfish Daily] #{post_str} #{", " if comment_str.size > 0} #{comment_str}"
+    @user = user
+    @new_posts = new_posts
+    @new_comments = new_comments
+    logger.info "sending mail to #{aliases.to_s}"
+    mail(from: format_from,
+         to: user.email,
+         subject: subject)
+  end
 
   def new_post_notify(post)
     users = User.find_new_post_notified_users
     aliases = users.map{|user| user.email}
-    subject = "[Woodenfish] #{post.subject}"
+    subject = "[Woodenfish Post] #{post.subject}"
     @post = post
     logger.info "sending mail to #{aliases.to_s}"
     mail(from: format_from(post.user),
@@ -16,7 +31,7 @@ class NotificationMailer < ActionMailer::Base
   def new_comment_notify(comment)
     users = User.find_new_comment_notified_users
     aliases = users.map{|user| user.email}
-    subject = "[Woodenfish] Comment: #{comment.post.subject}"
+    subject = "[Woodenfish Comment] #{comment.post.subject}"
     @comment = comment
     logger.info "sending mail to #{aliases.to_s}"
     mail(from: format_from(comment.user),
@@ -26,6 +41,10 @@ class NotificationMailer < ActionMailer::Base
   end
 
   private
+  def format_from
+    %Q{"WoodenFish" <#{Rails.configuration.notify_from_alias}>}
+  end
+
   def format_from(user)
     %Q{"#{user.name} (WoodenFish)" <#{Rails.configuration.notify_from_alias}>}
   end
