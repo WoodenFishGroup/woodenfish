@@ -3,6 +3,8 @@ require 'resque'
 require 'tasks/new_post_notification'
 
 class PostsController < LoginController
+  def sample
+  end
 
   def edit
     @post_id = params[:post_id]
@@ -19,9 +21,6 @@ class PostsController < LoginController
     Post.update(post_id, :subject => subject, :body => body, :modified_by => get_current_user_id, :modified => Time.now.utc)
     @post = Post.find(post_id)
     redirect_to :controller => "home", :action => 'index'
-  end
-
-  def sample
   end
 
   # NOTE: for easier debugging

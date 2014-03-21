@@ -41,6 +41,16 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+group :development do
+  gem 'rake'
+end
+
+group :test do
+  gem 'sqlite3'
+end
+
+source  'http://gem.corp.hulu.com/'
+gem  'hulu_sso'
 # may need "sudo yum install mysql-devel"
 gem 'mysql2'
 gem 'bootstrap-sass', '~> 3.1.1'
@@ -53,8 +63,5 @@ gem "therubyracer"
 gem 'rails_autolink'
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem "twitter-bootstrap-rails"
-
-source  'http://gem.corp.hulu.com/'
-gem  'hulu_sso'
-
 gem 'exception_notification'
+

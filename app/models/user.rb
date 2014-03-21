@@ -1,39 +1,35 @@
 require 'json'
 require 'net/http'
 
+
 class User < ActiveRecord::Base
+  class NotifyPolicy
+    def initialize(notification_string)
+      @json = JSON.parse(notification_string || "{}")
+    end
+
+    def new_post_notify?
+      @json.fetch('new_post', true)
+    end
+
+    def new_comment_notify?
+      @json.fetch('new_comment', true)
+    end
+  end
+
+  def notify_policy
+    @notify_policy ||= NotifyPolicy.new notification
+    @notify_policy
+  end
+
   def self.find_new_post_notified_users
     # TODO may need cache
-    users = User.find(:all)
-    notified_users = []
-    users.each do |user|
-      if !user.notification.blank?
-        notify = JSON.parse(user.notification)
-        if notify.fetch('new_post', true)
-          notified_users << user
-        end
-      else
-        notified_users << user
-      end
-    end
-    notified_users
+    User.find(:all).select {|u| u.notify_policy.new_post_notify? }
   end
 
   def self.find_new_comment_notified_users
     # TODO may need cache
-    users = User.find(:all)
-    notified_users = []
-    users.each do |user|
-      if !user.notification.blank?
-        notify = JSON.parse(user.notification)
-        if notify.fetch('new_comment', true)
-          notified_users << user
-        end
-      else
-        notified_users << user
-      end
-    end
-    notified_users
+    User.find(:all).select {|u| u.notify_policy.new_comment_notify? }
   end
 
   def self.query_or_create_user(query)
