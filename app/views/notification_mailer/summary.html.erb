@@ -1,4 +1,64 @@
-
 <% content_for :body do %>
-<% end %>
+  <% if @new_posts.size > 0 %>
+  <div>
+    <div style="border-bottom:1px"><h2>New posts</h2></div>
+    <div>
+    <table cellspacing="0" cellpadding="0" border="0" width="100%"
+      style="vertical-align: middle; border-spacing: 2px; border-color: gray;
+        padding: 8px; line-height: 20px; text-align: left; vertical-align: top;">
+      <tbody>
+      <% @new_posts.each do |post| %>
+        <tr>
+          <td style="border-top:1px solid #ddd;float:left;width:70%">
+            <b><%= post.subject %></b><br/>
+            <p> <%= auto_link(simple_format(post.body[0..100])).html_safe %> </p>
+          </td>
+          <td style="border-top:1px solid #ddd;float:left;width:30%">
+            <div style="float:left;padding-right:10px">
+              <% if is_mail_safe_image?(post.user.avartar) %>
+                <img style="width:40px;height:40px;border-radius: 5px;" src="<%= post.user.avartar %>" />
+              <% end %>
+            </div>
+            <div><b><%= post.user.name %></b></div>
+            <div style="color:#aaaaaa"><b><%= post.created.strftime("%F") %></b></div>
+          </td>
+        </tr>
+      </tbody>
+      <% end %>
+    </table>
+    </div>
+  </div>
+  <% end %>
 
+  <% if @new_comments.size > 0 %>
+  <div>
+    <div style="border-bottom:1px"><h2>New comments</h2></div>
+    <div>
+    <table cellspacing="0" cellpadding="0" border="0" width="100%"
+      style="vertical-align: middle; border-spacing: 2px; border-color: gray;
+        padding: 8px; line-height: 20px; text-align: left; vertical-align: top;">
+      <tbody>
+      <% @new_comments.each do |comment| %>
+        <tr>
+          <td style="border-top:1px solid #ddd;float:left;width:70%">
+            <p> <%= auto_link(simple_format(comment.body[0..100])).html_safe %> </p>
+            <p> commented post: <%= comment.post.subject %></p>
+          </td>
+          <td style="border-top:1px solid #ddd;float:left;width:30%">
+            <div style="float:left;padding-right:10px">
+              <% if is_mail_safe_image?(comment.user.avartar) %>
+                <img style="width:40px;height:40px;border-radius: 5px;" src="<%= comment.user.avartar %>" />
+              <% end %>
+            </div>
+            <div style="font-size:14px"><b><%= comment.user.name %></b></div>
+            <div style="font-size:14px;color:#aaaaaa"><b><%= comment.created.strftime("%F") %></b></div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    </div>
+  </div>
+  <% end %>
+
+<% end %>

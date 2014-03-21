@@ -8,6 +8,10 @@ class PostsController < LoginController
     #NotificationMailer.new_post_notify(post).deliver
     #comment = Comment.find_by_id(47)
     #NotificationMailer.new_comment_notify(comment).deliver
+    #user = User.find(1)
+    #new_posts = Post.where("id>9").all[0..5]
+    #new_comments = Comment.where("id>9").all.select {|c| !c.post.nil?} [0..5]
+    #NotificationMailer.summary(user, new_posts, new_comments).deliver
   end
 
   def index

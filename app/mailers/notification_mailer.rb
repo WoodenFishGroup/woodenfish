@@ -10,8 +10,8 @@ class NotificationMailer < ActionMailer::Base
     @user = user
     @new_posts = new_posts
     @new_comments = new_comments
-    logger.info "sending mail to #{aliases.to_s}"
-    mail(from: format_from,
+    logger.info "sending mail to #{user.email}"
+    mail(from: default_from,
          to: user.email,
          subject: subject)
   end
@@ -41,7 +41,7 @@ class NotificationMailer < ActionMailer::Base
   end
 
   private
-  def format_from
+  def default_from
     %Q{"WoodenFish" <#{Rails.configuration.notify_from_alias}>}
   end
 

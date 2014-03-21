@@ -12,6 +12,6 @@
 
   <div style="border-top: 1px solid #dddddd;">
     <p> <%= auto_link(simple_format(@post.body)).html_safe %> </p>
-    <p><%= Rails.configuration.portal_root %> | <%= link_to "Star It", star_post_link(@post.id), :host => Rails.configuration.portal_host %> </p>
+    <p><%= Rails.configuration.portal_root %> | <%= link_to "Star It", {:controller => "stars", :action => "star_post", :post_id => @post.id}, :host => Rails.configuration.portal_host %> </p>
   </div>
 <% end %>
