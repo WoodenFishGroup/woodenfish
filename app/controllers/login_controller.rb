@@ -13,6 +13,6 @@ class LoginController < ApplicationController
   end
   
   def set_account
-    set_current_user_sso(request.env['HULU_SSO'])
+    set_current_user_sso(request.env['HULU_SSO']) if !request.env['HULU_SSO'].blank?
   end
 end
