@@ -46,7 +46,6 @@ group :development do
 end
 
 group :test do
-  gem 'sqlite3'
 end
 
 source  'http://gem.corp.hulu.com/'
