@@ -2,7 +2,24 @@ require 'json'
 require 'resque'
 require 'tasks/new_post_notification'
 
-class PostsController < ApplicationController
+class PostsController < LoginController
+
+  def edit
+    @post_id = params[:post_id]
+    @post = Post.find(params[:post_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def save
+    post_id = params[:post_id]
+    subject = params[:post_subject]
+    body = params[:post_body]
+    Post.update(post_id, :subject => subject, :body => body, :modified_by => get_current_user_id, :modified => Time.now.utc)
+    @post = Post.find(post_id)
+    redirect_to :controller => "home", :action => 'index'
+  end
 
   def sample
   end

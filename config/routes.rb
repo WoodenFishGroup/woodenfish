@@ -4,19 +4,18 @@ Wf::Application.routes.draw do
   get  "/health_check" => "health_check#health_check"
 
   root "home#index"
-  post "home/star_post"
-  get  "home/edit_post"
-  put  "home/save_post"
   put  "home/save_profile"
 
+  put "stars/star_post"
+
+  get  "posts/edit"
+  put  "posts/save"
   post "posts/feed"
 
   # NOTE for debugging
   post "posts/portal_submit"
-  get  "posts/feed_result"
   get  "posts/sample"
   get  "posts/add_notification"
-  get  "posts/test"
 
   resources :posts do 
     resources :comments, :only => [:index]

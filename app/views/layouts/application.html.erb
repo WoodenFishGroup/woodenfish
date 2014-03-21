@@ -16,6 +16,17 @@
     .time_text {
       color: #aaaaaa;
     }
+    a.starred:link {color:#DAA520;}    /* unvisited link */
+    a.starred:visited {color:#DAA520;} /* visited link */
+    a.starred:hover {color:#dddddd;}   /* mouse over link */
+    a.starred:active {color:#DAA520;}  /* selected link */
+    a.unstarred:link {color:#dddddd;}    /* unvisited link */
+    a.unstarred:visited {color:#dddddd;} /* visited link */
+    a.unstarred:hover {color:#DAA520;}   /* mouse over link */
+    a.unstarred:active {color:#dddddd;}  /* selected link */
+    .poststar {
+      font-size:30px;
+    }
   </style>
 </head>
 
@@ -42,6 +53,10 @@
       <div class="modal-body">
         <p>
           Avartar: <%= text_field_tag :avartar, get_current_user_avartar, :style => "width:500px" %>
+          <br />
+          <span style="color:red">
+          Recommend to use email friendly avartar from <a target="_blank" href='https://en.gravatar.com/'>Gravatar</a>
+          </span>
         </p>
         <p>
           <%= submit_tag "save", :id => "save_profile" %>
