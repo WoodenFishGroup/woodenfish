@@ -7,7 +7,7 @@ class PostsController < LoginController
   end
 
   def stared
-    @posts = @@current_user.stared_posts
+    @posts = current_user.stared_posts
       .where("is_deleted=0")
       .includes(:user)
       .includes(:stars)
