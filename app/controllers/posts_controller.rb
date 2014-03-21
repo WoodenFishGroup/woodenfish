@@ -10,6 +10,14 @@ class PostsController < LoginController
     #NotificationMailer.new_comment_notify(comment).deliver
   end
 
+  def index
+    @posts = Post.where("is_deleted=0")
+        .includes(:user)
+        .paginate(:page => params[:page], :per_page => 20)
+        .order("posts.id DESC")
+    render "list"
+  end
+
   def stared
     @posts = current_user.stared_posts
       .where("is_deleted=0")
@@ -18,7 +26,7 @@ class PostsController < LoginController
       .paginate(:page => params[:page], :per_page => 20)
       .order("id DESC")
     @nav = "stared"
-    render "home/index"
+    render "list"
   end
 
   def edit

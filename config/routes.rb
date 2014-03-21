@@ -3,7 +3,7 @@ require 'resque/server'
 Wf::Application.routes.draw do
   get  "/health_check" => "health_check#health_check"
 
-  root "home#index"
+  root "posts#index"
   put  "home/save_profile"
 
   put "stars/star_post"
