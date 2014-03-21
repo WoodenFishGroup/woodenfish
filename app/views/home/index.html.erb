@@ -14,6 +14,12 @@
 </style>
 
 <div>
+  <% if @posts.empty? %>
+    <div class="container" style="width:50%">
+      <h4>No posts found! Explore <a href="/">home page</a> and add more stars!</h4>
+      <%= image_tag "woodenfish-loading.jpg", :class => "img-circle" %>
+    </div>
+  <% end %>
   <ul class="list-group" style="margin-left:0px;background-color:#dddddd">
     <% @posts.each do |post| %> 
       <li class="list-group-item" style="padding:20px;margin-bottom:20px">

@@ -6,6 +6,17 @@ class PostsController < LoginController
   def sample
   end
 
+  def stared
+    @posts = @@current_user.stared_posts
+      .where("is_deleted=0")
+      .includes(:user)
+      .includes(:stars)
+      .paginate(:page => params[:page], :per_page => 20)
+      .order("id DESC")
+    @nav = "stared"
+    render "home/index"
+  end
+
   def edit
     @post_id = params[:post_id]
     @post = Post.find(params[:post_id])

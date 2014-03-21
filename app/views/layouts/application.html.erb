@@ -27,16 +27,25 @@
     .poststar {
       font-size:30px;
     }
+    .navbar .navbar-inner .nav {
+      padding: 5px;
+    }
   </style>
 </head>
 
 <body style="background-color:#dddddd">
-  <div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar navbar-inverse navbar-fixed-top" id='top-nav'>
     <div class="navbar-inner">
       <div class="container" style="width:75%">
         <div> <a class="navbar-brand" href="/">Wooden Fish</a> </div>
-        <div class="nav-collapse collapse">
+        <div class="">
           <ul class="nav">
+            <li class="active" id='nav-home'>
+              <a href="/">Home</a>
+            </li>
+            <li id='nav-stared'>
+              <a href="/posts/stared">Stared</a>
+            </li>
           </ul>
         </div>
         <div id="user_profile">
@@ -120,6 +129,14 @@
     //  plan:         'Enhanced' // Plan name for the account
     //}
   }]);
+  </script>
+  <script>
+    var nav = '<%= @nav %>';
+    $(document).ready(function() {
+      if (nav) {
+        $("#top-nav .nav .active, #nav-" + nav).toggleClass('active');
+      }
+    });
   </script>
 </body>
 

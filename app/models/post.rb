@@ -3,31 +3,23 @@ require 'tasks/new_post_notification'
 
 class Post < ActiveRecord::Base
   belongs_to :user
-  has_many :comments, counter_cache: true
+  has_many :comments
+  has_many :stars, :as => :starable
 
   after_create :enqueue_notification
 
-  def starred_count
-    if self.starred_by
-      self.starred_by.split(',').select{|s| not s.empty?}.size
-    else
-      0
-    end
-  end
+  attr_accessor :stared_by_current_user
 
   def starred_by_user?(user_id)
-    self.starred_by && (self.starred_by.include? ",#{user_id},")
+    !stars.where(:user_id => user_id).empty?
   end
 
-  def self.change_star_status(post, user_id)
-    if post.starred_by_user?(user_id)
-      post.starred_by[",#{user_id},"] = ","
-    elsif
-      if post.starred_by
-        post.starred_by = ",#{(post.starred_by.split(',').select{|s| not s.empty?} + [user_id]).join(',')},"
-      elsif
-        post.starred_by = ",#{user_id},"
-      end
+  def change_star_status(user_id, toggle = true)
+    star = stars.where(:user_id => user_id).first
+    if star
+      star.destroy if toggle
+    else
+      stars.new(:user_id => user_id).save
     end
   end
 

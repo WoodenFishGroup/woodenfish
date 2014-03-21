@@ -17,7 +17,7 @@
         <div style="font-size:14px;color:#aaaaaa"><b>via email</b></div>
       </div>
       <br/>
-      <div><%= Rails.configuration.portal_root %></div>
+      <div><%= Rails.configuration.portal_root %> | <%= link_to "Star It", star_post_link(@post.id), :host => Rails.configuration.portal_host %> </div>
     </li>
 
     <li class="list-group-item" style="padding:20px;position: relative; display: block; padding: 10px 15px; margin-bottom: -1px; background-color: #fff; border: 1px solid #ddd; border-top:0px">

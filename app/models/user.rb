@@ -3,6 +3,11 @@ require 'net/http'
 
 
 class User < ActiveRecord::Base
+
+  has_many :stars
+  has_many :stared_posts, :through => :stars, :source => :starable, :source_type => "Post"
+  has_many :posts
+
   class NotifyPolicy
     def initialize(notification_string)
       @json = JSON.parse(notification_string || "{}")
@@ -20,6 +25,11 @@ class User < ActiveRecord::Base
   def notify_policy
     @notify_policy ||= NotifyPolicy.new notification
     @notify_policy
+  end
+
+  def stared?(post)
+    @stared_post_ids ||= stared_posts.select("posts.id").map(&:id)
+    @stared_post_ids.include?(post.id)
   end
 
   def self.find_new_post_notified_users

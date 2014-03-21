@@ -7,6 +7,7 @@ Wf::Application.routes.draw do
   put  "home/save_profile"
 
   put "stars/star_post"
+  get "stars/star_post", :as => :star_post
 
   get  "posts/edit"
   put  "posts/save"
@@ -16,6 +17,7 @@ Wf::Application.routes.draw do
   post "posts/portal_submit"
   get  "posts/sample"
   get  "posts/add_notification"
+  get  "posts/stared"
 
   resources :posts do 
     resources :comments, :only => [:index]

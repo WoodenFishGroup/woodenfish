@@ -1,0 +1,15 @@
+<div class="container" style="width:50%">
+  <h4>Starred successfully, redirecting in <span id='count-down-second'>5</span> seconds...</h4>
+  <%= image_tag "woodenfish-loading.jpg", :class => "img-circle" %>
+  <script>
+    var count_down = function(c) {
+      if (c == 0) {
+        window.location = "/?post_id=<%= @post.id %>";
+      } else {
+        $('#count-down-second').text(c);
+        setTimeout(function() { count_down(c-1); }, 1000);
+      }
+    }
+    count_down(5);
+  </script>
+</div>

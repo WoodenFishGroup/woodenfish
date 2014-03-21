@@ -1,8 +1,10 @@
 class HomeController < LoginController
 
   def index
-    @posts = Post.where("is_deleted=0").paginate(
-        :page => params[:page], :per_page => 20).order("id DESC")
+    @posts = Post.where("is_deleted=0")
+        .includes(:user)
+        .paginate(:page => params[:page], :per_page => 20)
+        .order("posts.id DESC")
   end
 
   def save_profile

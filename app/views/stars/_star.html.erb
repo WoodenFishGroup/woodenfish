@@ -1,12 +1,12 @@
 <% post ||= @post %>
 
 <div id="post-star-<%= post.id %>">
-  <% starred = post.starred_by_user?(get_current_user_id)  %>
+  <% starred = current_user.stared?(post)  %>
   <br />
   <%= link_to (starred ? "★" : "☆"), 
-    {:controller=>"stars", :action => "star_post", :post_id => post.id},
+    {:controller=>"stars", :action => "star_post", :post_id => post.id, :toggle => true},
     :class => "poststar #{(starred ? "starred" : "unstarred")}",
     :method => :put, :remote => true, :style => "text-decoration:none" %>
   <br />
-  <span style="font-size:20px;width:100%;"><%= post.starred_count %></span>
+  <span style="font-size:20px;width:100%;"><%= post.stars_count %></span>
 </div>
