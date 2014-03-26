@@ -22,14 +22,14 @@
   <% end %>
   <ul class="list-group" style="margin-left:0px;background-color:#dddddd">
     <% @posts.each do |post| %> 
-      <li class="list-group-item" style="padding:20px;margin-bottom:20px">
+      <li class="list-group-item post" style="padding:20px;margin-bottom:20px" id="post-<%= post.id %>">
         <div class="media">
           <div style="float:left;width:60px;margin-right:10px;text-align:center">
             <%= render :partial => 'stars/star', :locals => {:post => post} %>
           </div>
           <div class="media-body">
             <%= render :partial => 'posts/post', :locals => {:post => post, :mode => "view"} %>
-            <div id="post-comment-section-<%= post.id %>">
+            <div id="post-comment-section-<%= post.id %>" class="post-comment">
               <div id="post-comment-<%= post.id %>">
                   <% comment_count = post.comments_count %>
                   <% if comment_count > 0 %>
@@ -71,7 +71,36 @@
     <% end %>
   </ul>
 </div>
+<div id="post-list-control-button" class="post-list-control">
+  <div class="btn-group-vertical">
+    <%= button_tag :class => "btn btn-sm btn-default active", 'data-action' => "expand" do %>
+      <%= image_tag "full-post.png" %> Full Post
+    <% end %>
+    <%= button_tag :class => "btn btn-sm btn-default", 'data-action' => "collapse" do %>
+      <%= image_tag "title-only.png" %> Title Only
+    <% end %>
+  </div>
+</div>
 <div>
   <% cond = {} %>
   <%= will_paginate @posts, :params => cond, :renderer => BootstrapPagination::Rails, :class => "pager" %>
 </div>                                                                                                         
+<script>
+<% if @post_id %>
+  (function($) {
+    var scrollTo = function(node) {
+      var offsetY = $("#main-body").offset().top;
+      if (node.length > 0) {
+        $("body").animate({
+          scrollTop: $(node).offset().top - offsetY
+        }, 1000);
+      }
+    };
+    $(function() {
+      setTimeout(function() {
+        scrollTo($("#post-<%= @post_id %>"));
+      }, 1000);
+    });
+  })(jQuery);
+<% end %>
+</script>

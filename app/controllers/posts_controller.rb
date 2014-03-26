@@ -3,6 +3,7 @@ require 'resque'
 require 'tasks/new_post_notification'
 
 class PostsController < LoginController
+  POSTS_PER_PAGE = 20
   def sample
     #post = Post.find_by_id(89)
     #NotificationMailer.new_post_notify(post).deliver
@@ -15,9 +16,14 @@ class PostsController < LoginController
   end
 
   def index
+    if params[:post_id].to_i > 0 && Post.where("posts.id = ?", params[:post_id].to_i).count > 0
+      count = Post.where("posts.id > ?", params[:post_id].to_i).count
+      params[:page] = count / POSTS_PER_PAGE + 1
+      @post_id = params[:post_id].to_i
+    end
     @posts = Post.where("is_deleted=0")
         .includes(:user)
-        .paginate(:page => params[:page], :per_page => 20)
+        .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
         .order("posts.id DESC")
     render "list"
   end
@@ -27,7 +33,7 @@ class PostsController < LoginController
       .where("is_deleted=0")
       .includes(:user)
       .includes(:stars)
-      .paginate(:page => params[:page], :per_page => 20)
+      .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
       .order("id DESC")
     @nav = "stared"
     render "list"

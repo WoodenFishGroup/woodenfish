@@ -19,7 +19,7 @@
     <div>
       <div>
           <% if is_view %>
-            <h3 class="media-heading"> <%= post.subject %> </h3>
+            <h3 class="media-heading post-subject" data-post-id="<%= post.id %>"> <%= post.subject %> </h3>
           <% else %>
             <h3 class="media-heading"> <%= text_field_tag :post_subject, post.subject, :style => "width:100%" %> </h3>
           <% end %>
@@ -34,7 +34,7 @@
         <div class="time_text"><%= time_ago_in_words(post.created) %> ago</div>
       </div>
     </div>
-    <div style="padding-top:10px;padding-bottom:10px;margin-top:10px;margin-bottom:10px;border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd">
+    <div style="padding-top:10px;padding-bottom:10px;margin-top:10px;margin-bottom:10px;border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd" class="post-body-content">
       <% if is_view %>
         <%= auto_link(simple_format(post.body)).html_safe %>
       <% else %>
