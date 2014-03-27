@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
     def summary_send_time_in_day
       summary = @json.fetch('summary', {})
       # NOTE: UTC seconds in day
-      summary.fetch('time_in_day', nil)
+      summary.fetch('time_in_day', 0)
     end
   end
 

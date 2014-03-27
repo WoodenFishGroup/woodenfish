@@ -1,7 +1,17 @@
+require 'active_support/all'
 
 module ApplicationHelper
   @current_user_sso = {}
   @current_user = nil
+
+  def get_timezone_offset(zone)
+    return 0 if zone.nil?
+    if zone.downcase == 'cst'
+      8.hours
+    elsif zone.downcase == 'pst'
+      -7.hours
+    end
+  end
 
   def is_mail_safe_image?(url)
     url.include?("http://www.gravatar.com/avatar/")

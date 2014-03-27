@@ -9,9 +9,9 @@
     body {
       padding-top: 60px; /* to make the container go all the way to the bottom of the topbar */
     }
-    th, td {               
-      text-align: center !important;  
-      overflow: hidden;    
+    th, td {
+      text-align: center !important;
+      overflow: hidden;
     }
     .time_text {
       color: #aaaaaa;
@@ -54,24 +54,42 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="modal_user" style="top:30%;left:44%;width:59%;height:25%">
+  <div class="modal fade" id="modal_user" style="top:20%;left:44%;width:59%;height:60%">
     <%= form_tag "home/save_profile", :id => "profile_form", :method => "PUT" do %>
       <div class="modal-header">
         <h3>Edit Profile</h3>
       </div>
       <div class="modal-body">
-        <p>
-          Avartar: <%= text_field_tag :avartar, get_current_user_avartar, :style => "width:500px" %>
-          <br />
-          <span style="color:red">
-          Recommend to use email friendly avartar from <a target="_blank" href='https://en.gravatar.com/'>Gravatar</a>
-          </span>
-        </p>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <b class="panel-title">Avartar</b>
+          </div>
+          <div class="panel-body">
+            <%= text_field_tag :avartar, get_current_user_avartar, :style => "width:500px" %>
+            <br />
+            <span style="font-weight:bold">
+            Recommend to use email friendly avartar from <a target="_blank" href='https://en.gravatar.com/'>Gravatar</a>
+            </span>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <b class="panel-title">Notification</b>
+          </div>
+          <div class="panel-body">
+            <%= check_box_tag 'new_post', '1', current_user.notify_policy.new_post_notify? %> New post
+            <br/>
+            <%= check_box_tag 'new_comment', '1', current_user.notify_policy.new_comment_notify? %> New comment
+            <br/>
+            <%= check_box_tag 'summary', '1', current_user.notify_policy.summary_notify? %> Daily summary at &nbsp;
+            <%= select_tag "timezone", "<option>CST</option><option>PST</option>".html_safe, :style => "width:100px" %>
+            <% options = (0..23).to_a.map {|t| [t.to_s + ':00', t]} %>
+            <%= select_tag "time", options_for_select(options, (current_user.notify_policy.summary_send_time_in_day + get_timezone_offset('CST')) / 3600), :style => "width:100px" %>
+          </div>
+        </div>
         <p>
           <%= submit_tag "save", :id => "save_profile" %>
         </p>
-      </div>
-      <div class="modal-footer">
       </div>
     <% end %>
   </div>
