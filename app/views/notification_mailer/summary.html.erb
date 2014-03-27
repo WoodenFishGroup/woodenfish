@@ -69,7 +69,8 @@
           <td style="vertical-align:middle;padding-top:10px;padding-bottom:10px;width:80%;">
             <% str1 = '<span style="font-size:24px;color:#aaa">“</span>' %>
             <% str2 = '<span style="font-size:24px;color:#aaa">”</span>' %>
-            <%= (str1 + simple_format(comment.body[0..100])[3..-5] + str2).html_safe %>
+            <% body_extra = comment.body.size > 100 ? " ..." : "" %>
+            <%= (str1 + simple_format(comment.body[0..100])[3..-5] + body_extra + str2).html_safe %>
           </td>
         </tr>
         <% last_post_id = comment.post.id %>
