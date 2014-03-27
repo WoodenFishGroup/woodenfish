@@ -2,15 +2,29 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+# TODO CJ: this code style is not good!!!
 class PostList
   constructor: () ->
     @collapsed = false
     @animating = false
     @animate_timeout = 300
+    @cookie_key = "_wf_post_view"
+    @cookie_expire = 365 # 1 year
 
-  callback_if_present: (cb) =>
+  callbackIfPresent: (cb) =>
     if (cb && typeof(cb) == 'function')
       cb()
+
+  setConfigToCookie: () =>
+    if (@collapsed) 
+      $.cookie(@cookie_key, "c", {expires: @cookie_expire})
+    else
+      $.cookie(@cookie_key, "e", {expires: @cookie_expire})
+
+  # return true if the config is "collapsed"
+  getConfigFromCookie: () =>
+    $.cookie(@cookie_key) == "c"
+
 
   collapse: (cb) =>
     if (!@animating)
@@ -20,7 +34,8 @@ class PostList
       ).promise().done(() => 
         @animating = false
         @collapsed = true
-        @callback_if_present(cb)
+        @setConfigToCookie()
+        @callbackIfPresent(cb)
       )
 
   expand: (cb) =>
@@ -31,7 +46,8 @@ class PostList
       ).promise().done(() =>
         @animating = false
         @collapsed = false
-        @callback_if_present(cb)
+        @setConfigToCookie()
+        @callbackIfPresent(cb)
       )
 
   toggleCollapse: (cb) =>
@@ -70,4 +86,8 @@ class PostList
           buttons.select(".active").add($node).toggleClass("active")
         )
     )
+    
+    if (post_list.getConfigFromCookie())
+      buttons.select("[data-action=collapse]").click()
+
 ))(jQuery)
