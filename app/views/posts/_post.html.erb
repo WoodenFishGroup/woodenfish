@@ -27,14 +27,14 @@
       <div style="padding-bottom:10px;padding-top:10px">
         <div style="float:left;padding-right:10px">
           <img style="width:40px;height:40px;border-radius: 5px;"
-            class="pull-right media-object" 
+            class="pull-right media-object"
             src="<%= post.user.avartar.html_safe %>" />
         </div>
         <div><b><%= post.user.name %></b></div>
         <div class="time_text"><%= time_ago_in_words(post.created) %> ago</div>
       </div>
     </div>
-    <div style="padding-top:10px;padding-bottom:10px;margin-top:10px;margin-bottom:10px;border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd" class="post-body-content">
+    <div style="padding-top:10px;padding-bottom:5px;margin-top:10px;margin-bottom:5px;border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd" class="post-body-content">
       <% if is_view %>
         <%= auto_link(simple_format(post.body)).html_safe %>
       <% else %>

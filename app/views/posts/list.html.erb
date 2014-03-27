@@ -21,8 +21,8 @@
     </div>
   <% end %>
   <ul class="list-group" style="margin-left:0px;background-color:#dddddd">
-    <% @posts.each do |post| %> 
-      <li class="list-group-item post" style="padding:20px;margin-bottom:20px" id="post-<%= post.id %>">
+    <% @posts.each do |post| %>
+      <li class="list-group-item post" style="padding:15px;margin-bottom:15px" id="post-<%= post.id %>">
         <div class="media">
           <div style="float:left;width:60px;margin-right:10px;text-align:center">
             <%= render :partial => 'stars/star', :locals => {:post => post} %>
@@ -33,7 +33,7 @@
               <div id="post-comment-<%= post.id %>">
                   <% comment_count = post.comments_count %>
                   <% if comment_count > 0 %>
-                    <%= link_to "#{comment_count} comment#{"s" if comment_count > 1}", 
+                    <%= link_to "#{comment_count} comment#{"s" if comment_count > 1}",
                           post_comments_path(post.id),
                           :method => :get, :remote => true %>
                   <% end %>
@@ -84,7 +84,7 @@
 <div>
   <% cond = {} %>
   <%= will_paginate @posts, :params => cond, :renderer => BootstrapPagination::Rails, :class => "pager" %>
-</div>                                                                                                         
+</div>
 <script>
 <% if @post_id %>
   (function($) {
