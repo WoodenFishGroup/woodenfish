@@ -40,7 +40,7 @@
               </div>
               <div style="margin-right:60px;margin-top:10px">
                 <script>
-                  $(function(){
+                  $(document).on("page:load ready", function(){
                     $('#comment-form-<%= post.id %>').bind('ajax:success', function(xhr, data, status){
                       $('#comment-body-<%= post.id %>').val("").attr("disabled", false);
                       $.get('<%= post_comments_path(post.id) %>');
@@ -96,7 +96,7 @@
         }, 1000);
       }
     };
-    $(function() {
+    $(document).on("ready page:load", function() {
       setTimeout(function() {
         scrollTo($("#post-<%= @post_id %>"));
       }, 1000);

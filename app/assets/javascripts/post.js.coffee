@@ -55,7 +55,7 @@ class PostList
       )
 
 (($) -> 
-  $(() ->
+  $(document).on("page:load ready", () ->
     post_list = new PostList()
 
     $(".post .post-subject").click(() ->

@@ -134,12 +134,13 @@
   </script>
   <script>
     var nav = '<%= @nav %>';
-    $(document).ready(function() {
+    $(document).on("ready page:load", function() {
       if (nav) {
-        $("#top-nav .nav .active, #nav-" + nav).toggleClass('active');
+        $("#top-nav .nav .active").toggleClass('active');
+        $("#nav-" + nav).addClass('active');
       }
     });
-    $(document).ready(function() {
+    $(document).on("ready page:load", function() {
       $("textarea.auto-grow").autoGrow();
     });
   </script>
