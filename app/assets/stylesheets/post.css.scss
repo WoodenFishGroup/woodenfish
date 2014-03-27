@@ -1,3 +1,35 @@
 // Place all the styles related to the post controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.post-list-control {
+  position: fixed;
+  left: 87.5%;
+  top: 62px;
+}
+
+.post-list-control .btn {
+  vertical-align: middle;
+  text-align: left;
+}
+
+.post-list-control .btn-group-vertical > .btn:first-child:not(:last-child) {
+  border-radius: 8px 8px 0 0;
+  -webkit-border-radius: 8px 8px 0 0;
+  -moz-border-radius: 8px 8px 0 0;
+}
+
+.post-list-control .btn-group-vertical > .btn:last-child:not(:first-child) {
+  border-radius: 0 0 8px 8px;
+  -webkit-border-radius: 0 0 8px 8px;
+  -moz-border-radius: 0 0 8px 8px;
+}
+
+.post-subject {
+  cursor: pointer;
+}
+
+.post.collapsed .post-body-content, .post.collapsed .post-comment {
+  display: none;
+}
+

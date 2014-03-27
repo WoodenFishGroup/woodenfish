@@ -16,25 +16,6 @@
   position: relative;
 }
 
-.post-list-control {
-  position: fixed;
-  left: 87.5%;
-  top: 62px;
-}
-
-.post-list-control .btn {
-  vertical-align: middle;
-  text-align: left;
-}
-
-.post-subject {
-  cursor: pointer;
-}
-
 .hide {
-  display: none;
-}
-
-.post.collapsed .post-body-content, .post.collapsed .post-comment {
   display: none;
 }
