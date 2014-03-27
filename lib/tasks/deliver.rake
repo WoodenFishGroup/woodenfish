@@ -14,7 +14,7 @@ namespace :deliver do
 
   def check_to_send_summary
     info "check to send summary"
-    users = User.all.select {|u| u.send_summary_now? }
+    users = User.find(:all).select {|u| u.send_summary_now? }
     info "no user need summary at this time" if users.size == 0
     now = Time.now.utc
     users.each do |user|
