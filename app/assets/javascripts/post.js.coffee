@@ -15,7 +15,9 @@ class PostList
   collapse: (cb) =>
     if (!@animating)
       @animating = true
-      $(".post-body-content, .post-comment").hide(@animate_timeout).promise().done(() => 
+      $(".post-body-content, .post-comment").hide(@animate_timeout, () ->
+        $(this).data("hide", true)
+      ).promise().done(() => 
         @animating = false
         @collapsed = true
         @callback_if_present(cb)
@@ -24,7 +26,9 @@ class PostList
   expand: (cb) =>
     if (!@animating)
       @animating = true
-      $(".post-body-content, .post-comment").show(@animate_timeout).promise().done(() =>
+      $(".post-body-content, .post-comment").show(@animate_timeout, () ->
+        $(this).data("hide", false)
+      ).promise().done(() =>
         @animating = false
         @collapsed = false
         @callback_if_present(cb)
