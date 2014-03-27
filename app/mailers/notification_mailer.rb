@@ -2,18 +2,16 @@ class NotificationMailer < ActionMailer::Base
   layout 'mail'
   add_template_helper(ApplicationHelper)
 
-  def summary(user, new_posts, new_comments)
-    return if new_posts.size + new_comments.size == 0
-    post_str = (new_posts.size > 0 ? "#{new_posts.size} posts" : "")
-    comment_str = (new_comments.size > 0 ? "#{new_comments.size} comments" : "")
-    subject = "[Woodenfish Daily] #{post_str} #{", " if comment_str.size > 0} #{comment_str}"
-    @user = user
-    @new_posts = new_posts
-    @new_comments = new_comments
+  def summary(user, new_posts, new_comments, top_starred_posts)
     logger.info "sending mail to #{user.email}"
-    mail(from: default_from,
-         to: user.email,
-         subject: subject)
+    post_str = (new_posts.size > 0 ? "#{new_posts.size} new posts" : "")
+    comment_str = (new_comments.size > 0 ? "#{new_comments.size} new comments" : "")
+    subject = "[Woodenfish Daily] #{post_str} #{", " if post_str.size > 0} #{comment_str}"
+    @user = user
+    @new_posts = new_posts.sort {|x,y| x.user.id <=> y.user.id}
+    @new_comments = new_comments.sort {|x,y| [x.post.id, x.created] <=> [y.post.id, y.created]}
+    @top_starred_posts = top_starred_posts.sort {|x,y| [x.stars_count, x.created] <=> [y.stars_count, y.created]}
+    mail(from: default_from, to: user.email, subject: subject)
   end
 
   def new_post_notify(post)

@@ -5,14 +5,6 @@ require 'tasks/new_post_notification'
 class PostsController < LoginController
   POSTS_PER_PAGE = 20
   def sample
-    #post = Post.find_by_id(89)
-    #NotificationMailer.new_post_notify(post).deliver
-    #comment = Comment.find_by_id(47)
-    #NotificationMailer.new_comment_notify(comment).deliver
-    #user = User.find(1)
-    #new_posts = Post.where("id>9").all[0..5]
-    #new_comments = Comment.where("id>9").all.select {|c| !c.post.nil?} [0..5]
-    #NotificationMailer.summary(user, new_posts, new_comments).deliver
   end
 
   def index
@@ -81,7 +73,7 @@ class PostsController < LoginController
   #   :user => {
   #     :name => ...,
   #     :email => ...
-  #   }, 
+  #   },
   #   :post => {
   #     :subject => ...,
   #     :body => ...,

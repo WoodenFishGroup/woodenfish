@@ -1,6 +1,6 @@
 require 'json'
 require 'net/http'
-
+require 'active_support/all'
 
 class User < ActiveRecord::Base
 
@@ -20,11 +20,30 @@ class User < ActiveRecord::Base
     def new_comment_notify?
       @json.fetch('new_comment', true)
     end
+
+    def summary_notify?
+      summary = @json.fetch('summary', {})
+      summary.fetch('enabled', false)
+    end
+
+    def summary_send_time_in_day
+      summary = @json.fetch('summary', {})
+      # NOTE: UTC seconds in day
+      summary.fetch('time_in_day', nil)
+    end
   end
 
   def notify_policy
     @notify_policy ||= NotifyPolicy.new notification
     @notify_policy
+  end
+
+  def send_summary_now?
+    return false if not notify_policy.summary_notify?
+    now = Time.now.utc.to_i
+    now_seconds_in_day = now / (24 * 3600)
+    last_summary_ts = self.last_summary_ts.nil? ? now - 3.days : self.last_summary_ts.to_i
+    (last_summary_ts + 12.hours < now) && (notify_policy.summary_send_time_in_day < now_seconds_in_day)
   end
 
   def stared?(post)

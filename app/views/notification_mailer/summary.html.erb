@@ -5,24 +5,31 @@
     <div>
     <table cellspacing="0" cellpadding="0" border="0" width="100%"
       style="vertical-align: middle; border-spacing: 2px; border-color: gray;
-        padding: 8px; line-height: 20px; text-align: left; vertical-align: top;">
+        padding: 0px; padding-left:0px; line-height: 20px; text-align: middle;">
       <tbody>
+      <% last_user_id = nil %>
       <% @new_posts.each do |post| %>
+        <% same_as_last_user = (last_user_id == post.user.id) %>
+        <% need_top_border = !same_as_last_user %>
+        <% border_style = need_top_border ? "border-top:1px solid #ddd" : "" %>
         <tr>
-          <td style="border-top:1px solid #ddd;float:left;width:70%">
-            <b><%= post.subject %></b><br/>
-            <p> <%= auto_link(simple_format(post.body[0..100])).html_safe %> </p>
+          <td style="vertical-align:middle;padding-top:10px;padding-bottom:10px;width:70%;border-top:1px solid #ddd">
+            <% post_url = "#{Rails.configuration.portal_root}?post_id=#{post.id}" %>
+            <a style="font-weight:bold;text-decoration:none" href="<%= post_url %>"><%= post.subject %></a>
+            <p>
+            <span style="font-size:24px;color:#aaa">“</span>
+            <% body = post.body[0..300].sub('\n', ' ') %>
+            <%= body %> <%= "..." if post.body.size > 300 %>
+            <span style="font-size:24px;color:#aaa">”</span>
+            </p>
           </td>
-          <td style="border-top:1px solid #ddd;float:left;width:30%">
-            <div style="float:left;padding-right:10px">
-              <% if is_mail_safe_image?(post.user.avartar) %>
-                <img style="width:40px;height:40px;border-radius: 5px;" src="<%= post.user.avartar %>" />
-              <% end %>
-            </div>
-            <div><b><%= post.user.name %></b></div>
-            <div style="color:#aaaaaa"><b><%= post.created.strftime("%F") %></b></div>
+          <td style="text-align:middle;vertical-align:middle;padding-top:10px;padding-bottom:10px;width:30%; <%= border_style %>">
+            <% if not same_as_last_user %>
+              <div><b><%= post.user.name %></b></div>
+            <% end %>
           </td>
         </tr>
+        <% last_user_id = post.user.id %>
       </tbody>
       <% end %>
     </table>
@@ -36,26 +43,75 @@
     <div>
     <table cellspacing="0" cellpadding="0" border="0" width="100%"
       style="vertical-align: middle; border-spacing: 2px; border-color: gray;
-        padding: 8px; line-height: 20px; text-align: left; vertical-align: top;">
+        padding: 0px; padding-left:0px; line-height: 20px; text-align: middle;">
       <tbody>
-      <% @new_comments.each do |comment| %>
+      <% last_post_id = nil %>
+      <% last_user_id = nil %>
+      <% @new_comments.each_with_index do |comment, index| %>
+        <% same_as_last_post = (comment.post.id == last_post_id) %>
+        <% border_style = same_as_last_post ? "" : "border-top:1px solid #ddd"%>
+        <% if not same_as_last_post %>
         <tr>
-          <td style="border-top:1px solid #ddd;float:left;width:70%">
-            <p> <%= auto_link(simple_format(comment.body[0..100])).html_safe %> </p>
-            <p> commented post: <%= comment.post.subject %></p>
-          </td>
-          <td style="border-top:1px solid #ddd;float:left;width:30%">
-            <div style="float:left;padding-right:10px">
-              <% if is_mail_safe_image?(comment.user.avartar) %>
-                <img style="width:40px;height:40px;border-radius: 5px;" src="<%= comment.user.avartar %>" />
-              <% end %>
-            </div>
-            <div style="font-size:14px"><b><%= comment.user.name %></b></div>
-            <div style="font-size:14px;color:#aaaaaa"><b><%= comment.created.strftime("%F") %></b></div>
+          <td colspan="3" style="text-align:middle;vertical-align:middle;padding-top:5px;padding-bottom:5px;<%= border_style %>">
+          <% post_url = "#{Rails.configuration.portal_root}?post_id=#{comment.post.id}" %>
+          <span style="color:#aaa">Commented on: </span> <a style="text-decoration:none" href="<%= post_url %>"><%= comment.post.subject %></a>
           </td>
         </tr>
+        <% end %>
+        <tr>
+          <td style="text-align:middle;vertical-align:middle;padding-top:10px;padding-bottom:10px;width:5%;">
+          </td>
+          <td style="text-align:middle;vertical-align:;padding-top:10px;padding-bottom:10px;width:15%;">
+            <% if (last_user_id != comment.user.id) || (last_post_id != comment.post.id) %>
+              <div><b><%= comment.user.name %></b></div>
+            <% end %>
+          </td>
+          <td style="vertical-align:middle;padding-top:10px;padding-bottom:10px;width:80%;">
+            <% str1 = '<span style="font-size:24px;color:#aaa">“</span>' %>
+            <% str2 = '<span style="font-size:24px;color:#aaa">”</span>' %>
+            <%= (str1 + simple_format(comment.body[0..100])[3..-5] + str2).html_safe %>
+          </td>
+        </tr>
+        <% last_post_id = comment.post.id %>
+        <% last_user_id = comment.user.id %>
       <% end %>
       </tbody>
+    </table>
+    </div>
+  </div>
+  <% end %>
+
+  <% if @new_posts.size == 0 && @new_comments.size == 0 %>
+  <div>
+    <div style="border-bottom:1px"><h1>Nothing new today :(</h1></div>
+    <br/>
+  </div>
+  <% end %>
+
+  <% if @top_starred_posts.size > 0 %>
+  <div>
+    <div style="border-bottom:1px"><h2>Previous top posts</h2></div>
+    <div>
+    <table cellspacing="0" cellpadding="0" border="0" width="100%"
+      style="vertical-align: middle; border-spacing: 2px; border-color: gray;
+        padding: 0px; padding-left:0px; line-height: 20px; text-align: middle;">
+      <tbody>
+      <% @top_starred_posts.each do |post| %>
+        <% border_style = "border-top:1px solid #ddd" %>
+        <tr>
+          <td style="text-align:middle;vertical-align:middle;padding-top:10px;padding-bottom:10px;width:6%; <%= border_style %>">
+            <%= post.stars_count %>&nbsp;<span style="color:#DAA520">★</span>
+          </td>
+          <td style="vertical-align:middle;padding-top:10px;padding-bottom:10px;width:64%;border-top:1px solid #ddd">
+            <% post_url = "#{Rails.configuration.portal_root}?post_id=#{post.id}" %>
+            <a style="font-weight:bold;text-decoration:none" href="<%= post_url %>"><%= post.subject %></a>
+          </td>
+          <td style="text-align:middle;vertical-align:middle;padding-top:10px;padding-bottom:10px;width:30%; <%= border_style %>">
+            <div><b><%= post.user.name %></b></div>
+          </td>
+        </tr>
+      </tbody>
+      <% end %>
     </table>
     </div>
   </div>
