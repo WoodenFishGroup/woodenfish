@@ -100,14 +100,16 @@
       <% @top_starred_posts.each do |post| %>
         <% border_style = "border-top:1px solid #ddd" %>
         <tr>
-          <td style="text-align:middle;vertical-align:middle;padding-top:10px;padding-bottom:10px;width:6%; <%= border_style %>">
-            <%= post.stars_count %>&nbsp;<span style="color:#DAA520">★</span>
+          <td style="text-align:middle;vertical-align:middle;padding-top:10px;padding-bottom:10px;width:15%; <%= border_style %>">
+            <% count = post.stars_count < 5 ? post.stars_count : 5 %>
+            <% extra = post.stars_count > 5 ? "..." : "" %>
+            <span style="color:#DAA520"><%= ("★" * (count - 1)) + extra %>★</span>
           </td>
-          <td style="vertical-align:middle;padding-top:10px;padding-bottom:10px;width:64%;border-top:1px solid #ddd">
+          <td style="vertical-align:middle;padding-top:10px;padding-bottom:10px;width:60%;border-top:1px solid #ddd">
             <% post_url = "#{Rails.configuration.portal_root}?post_id=#{post.id}" %>
             <a style="font-weight:bold;text-decoration:none" href="<%= post_url %>"><%= post.subject %></a>
           </td>
-          <td style="text-align:middle;vertical-align:middle;padding-top:10px;padding-bottom:10px;width:30%; <%= border_style %>">
+          <td style="text-align:middle;vertical-align:middle;padding-top:10px;padding-bottom:10px;width:25%; <%= border_style %>">
             <div><b><%= post.user.name %></b></div>
           </td>
         </tr>
