@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
     def summary_notify?
       summary = @json.fetch('summary', {})
-      summary.fetch('enabled', false)
+      summary.fetch('enabled', true)
     end
 
     def summary_send_time_in_day
