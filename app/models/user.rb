@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
     now = Time.now.utc.to_i
     now_seconds_in_day = now % (24 * 3600)
     last_summary_time = last_summary_ts.nil? ? now - 3.days : last_summary_ts.to_i
-    (last_summary_time + 12.hours < now) && (notify_policy.summary_send_time_in_day < now_seconds_in_day)
+    (last_summary_time + 23.hours < now) && (notify_policy.summary_send_time_in_day < now_seconds_in_day)
   end
 
   def stared?(post)
