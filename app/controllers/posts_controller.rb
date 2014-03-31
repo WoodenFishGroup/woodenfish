@@ -40,11 +40,16 @@ class PostsController < LoginController
   end
 
   def save
-    post_id = params[:post_id]
-    subject = params[:post_subject]
-    body = params[:post_body]
-    Post.update(post_id, :subject => subject, :body => body, :modified_by => get_current_user_id, :modified => Time.now.utc)
-    @post = Post.find(post_id)
+    if params[:commit] != 'cancel'
+      post_id = params[:post_id]
+      subject = params[:post_subject]
+      body = params[:post_body]
+      Post.update(post_id, :subject => subject, :body => body, :modified_by => get_current_user_id, :modified => Time.now.utc)
+      #@post = Post.find(post_id)
+      if params[:notify] == '1'
+        Resque.enqueue(Tasks::NewPostNotification, post_id)
+      end
+    end
     redirect_to root_path
   end
 
