@@ -20,10 +20,10 @@ namespace :deliver do
     users.each do |user|
       check_time = user.last_summary_ts || (now - 1.days - 2.hours)
       long_before = check_time - 14.days
-      new_posts = Post.where(:created => check_time..now)
-      new_comments = Comment.where(:created => check_time..now)
+      new_posts = Post.where(:created => check_time..now, :is_deleted => 0)
+      new_comments = Comment.where(:created => check_time..now, :is_deleted => 0)
       top_posts = Post.where(\
-          ["created>? and created<? and stars_count>0", long_before, check_time])\
+          ["created>? and created<? and stars_count>0 and is_deleted=0", long_before, check_time])\
           .order('stars_count desc').limit(10)
       info "  sending to #{user.name}, #{user.email}"
       info "    new posts: #{new_posts.map {|p| p.subject}}"
