@@ -1,14 +1,11 @@
 <style>
   .list-group-item {
     border-radius: 8px;
-    border-radius: 8px;
   }
   .list-group-item:first-child {
     border-radius: 8px;
-    border-radius: 8px;
   }
   .list-group-item:last-child {
-    border-radius: 8px;
     border-radius: 8px;
   }
 </style>
@@ -73,14 +70,39 @@
 </div>
 <div id="post-list-control-button" class="post-list-control">
   <div class="btn-group-vertical">
-    <%= button_tag :class => "btn btn-sm btn-default active", 'data-action' => "expand" do %>
-      <%= image_tag "full-post.png", :alt => "Full Post" %>
-    <% end %>
-    <%= button_tag :class => "btn btn-sm btn-default", 'data-action' => "collapse" do %>
-      <%= image_tag "title-only.png", :alt => "Title Only" %>
-    <% end %>
+      <%= button_tag :style => "border-bottom-left-radius:8px;border-bottom-right-radius:8px",
+        :class => "btn btn-sm btn-default", :data => { :toggle => 'modal', :target => '#modal_new_post' } do %>
+        <span style="font-size:20px;">+</span>
+      <% end %>
+
+      <div style="height:20px">
+      </div>
+
+      <%= button_tag :style => "width:50px;border-top-left-radius:8px;border-top-right-radius:8px",
+          :class => "btn btn-sm btn-default view-style-btn active", 'data-action' => "expand" do %>
+        <%= image_tag "full-post.png", :alt => "Full Post" %>
+      <% end %>
+      <%= button_tag :style => "width:50px",
+          :class => "btn btn-sm btn-default view-style-btn", 'data-action' => "collapse" do %>
+        <%= image_tag "title-only.png", :alt => "Title Only" %>
+      <% end %>
   </div>
 </div>
+
+  <div class="modal fade" id="modal_new_post" style="top:10%;left:44%;width:59%;height:65%">
+    <%= form_tag "/posts", :method => "post", :style => "width:100%;height:100%" do %>
+      <div class="modal-header">
+        <h3>New post</h3>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="user_email" value="<%= get_current_user_email %>" />
+        <p> <input style="width:100%;height:30px" type="text" name="post_subject" value="" /> </p>
+        <p> <textarea style="width:100%" rows=12 type="text" name="post_body" value=""></textarea> </p>
+        <p> <button type="submit" class="btn btn-default">post</button> </p>
+      </div>
+    <% end %>
+  </div>
+
 <div>
   <% cond = {} %>
   <%= will_paginate @posts, :params => cond, :renderer => BootstrapPagination::Rails, :class => "pager" %>

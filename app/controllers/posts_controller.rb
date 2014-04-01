@@ -88,10 +88,13 @@ class PostsController < LoginController
   # }
   def create
     user_info = (params["user"] || {})
+    user_info["email"] = params["user_email"] if params["user_email"]
     post_info = {
       "source" => "portal",
       "source_id" => Time.now.utc.to_i.to_s
     }.merge(params["post"] || {})
+    post_info["subject"] = params["post_subject"] if params["post_subject"]
+    post_info["body"] = params["post_body"] if params["post_body"]
     feed_impl(user_info, post_info)
   end
 
@@ -102,7 +105,11 @@ class PostsController < LoginController
     assert_post_info(post_info)
     user = User.query_or_create_user(user_info)
     post, create = Post.query_or_create_post(post_info, user)
-    render :json => post
+    if post_info["source"] == "portal"
+      redirect_to root_path + "?post_id=#{post.id}"
+    else
+      render :json => post
+    end
   end
 
   def assert_post_info(info)

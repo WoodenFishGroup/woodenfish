@@ -16,7 +16,7 @@ class PostList
       cb()
 
   setConfigToCookie: () =>
-    if (@collapsed) 
+    if (@collapsed)
       $.cookie(@cookie_key, "c", {expires: @cookie_expire})
     else
       $.cookie(@cookie_key, "e", {expires: @cookie_expire})
@@ -31,7 +31,7 @@ class PostList
       @animating = true
       $(".post-body-content, .post-comment").hide(@animate_timeout, () ->
         $(this).data("hide", true)
-      ).promise().done(() => 
+      ).promise().done(() =>
         @animating = false
         @collapsed = true
         @setConfigToCookie()
@@ -51,17 +51,17 @@ class PostList
       )
 
   toggleCollapse: (cb) =>
-    toggle_cb = false 
+    toggle_cb = false
     if (cb && typeof(cb) == 'function')
       toggle_cb = () => cb(!@collapsed)
-    if (@collapsed) 
+    if (@collapsed)
       @expand(toggle_cb)
-    else 
+    else
       @collapse(toggle_cb)
 
   togglePost: (post_id) =>
     node = $("#post-"+post_id).find(".post-body-content, .post-comment")
-    if (node.data("hide") == true) 
+    if (node.data("hide") == true)
       node.show(@animate_timeout).promise().done(() =>
         node.data("hide", false)
       )
@@ -70,7 +70,7 @@ class PostList
         node.data("hide", true)
       )
 
-(($) -> 
+(($) ->
   $(document).on("page:load ready", () ->
     post_list = new PostList()
 
@@ -78,7 +78,7 @@ class PostList
       post_id = $(this).data("post-id")
       post_list.togglePost(post_id))
 
-    buttons = $("#post-list-control-button .btn")
+    buttons = $("#post-list-control-button .view-style-btn")
     buttons.click((event) ->
       $node = $(this)
       if (!$node.hasClass("active"))
@@ -86,7 +86,7 @@ class PostList
           buttons.select(".active").add($node).toggleClass("active")
         )
     )
-    
+
     if (post_list.getConfigFromCookie())
       buttons.select("[data-action=collapse]").click()
 
