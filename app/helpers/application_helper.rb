@@ -1,4 +1,5 @@
 require 'active_support/all'
+require 'digest/md5'
 
 module ApplicationHelper
   @current_user_sso = {}
@@ -62,6 +63,11 @@ module ApplicationHelper
 
   def current_user
     @current_user
+  end
+
+  def get_default_gravartar(email)
+    hash = Digest::MD5.hexdigest(email.downcase)    
+    "http://www.gravatar.com/avatar/#{hash}?d=identicon"
   end
 
 end

@@ -4,6 +4,8 @@
     <div style="float:left;padding-right:10px">
       <% if is_mail_safe_image?(@post.user.avartar) %>
         <img style="width:40px;height:40px;border-radius: 5px;" src="<%= @post.user.avartar.html_safe %>" />
+      <% else %>
+        <img style="width:40px;height:40px;border-radius: 5px;" src="<%= get_default_gravartar(@post.user.email) %>" />
       <% end %>
     </div>
     <div><b><%= @post.user.name %></b></div>

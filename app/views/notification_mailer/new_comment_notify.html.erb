@@ -4,6 +4,8 @@
     <div style="float:left;padding-right:10px">
       <% if is_mail_safe_image?(@comment.user.avartar) %>
         <img style="width:40px;height:40px;border-radius: 5px;" src="<%= @comment.user.avartar.html_safe %>" />
+      <% else %>
+        <img style="width:40px;height:40px;border-radius: 5px;" src="<%= get_default_gravartar(@comment.user.email) %>" />
       <% end %>
     </div>
     <div><b><%= @comment.user.name %></b></div>
@@ -16,6 +18,8 @@
     <div style="float:left;padding-right:10px">
       <% if is_mail_safe_image?(@comment.post.user.avartar) %>
         <img style="width:40px;height:40px;border-radius: 5px;" src="<%= @comment.post.user.avartar.html_safe %>" />
+      <% else %>
+        <img style="width:40px;height:40px;border-radius: 5px;" src="<%= get_default_gravartar(@comment.post.user.email) %>" />
       <% end %>
     </div>
     <div><b><%= @comment.post.user.name %></b></div>
