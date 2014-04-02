@@ -6,7 +6,7 @@ class NotificationMailer < ActionMailer::Base
     logger.info "sending mail to #{user.email}"
     post_str = (new_posts.size > 0 ? "#{new_posts.size} new posts" : "")
     comment_str = (new_comments.size > 0 ? "#{new_comments.size} new comments" : "")
-    subject = "[Woodenfish Daily] #{post_str} #{", " if post_str.size > 0} #{comment_str}"
+    subject = "[WoodenFish Daily] #{post_str} #{", " if post_str.size > 0} #{comment_str}"
     @user = user
     @new_posts = new_posts.sort {|x,y| x.user.id <=> y.user.id}
     @new_comments = new_comments.sort {|x,y| [x.post.id, x.created] <=> [y.post.id, y.created]}
@@ -18,7 +18,7 @@ class NotificationMailer < ActionMailer::Base
   def new_post_notify(post)
     users = User.find_new_post_notified_users
     aliases = users.map{|user| user.email}
-    subject = "[Woodenfish Post] #{post.subject}"
+    subject = "[WoodenFish Post] #{post.subject}"
     @post = post
     logger.info "sending mail to #{aliases.to_s}"
     mail(from: format_from(post.user),
@@ -30,7 +30,7 @@ class NotificationMailer < ActionMailer::Base
   def new_comment_notify(comment)
     users = User.find_new_comment_notified_users
     aliases = users.map{|user| user.email}
-    subject = "[Woodenfish Comment] #{comment.post.subject}"
+    subject = "[WoodenFish Comment] #{comment.post.subject}"
     @comment = comment
     logger.info "sending mail to #{aliases.to_s}"
     mail(from: format_from(comment.user),
