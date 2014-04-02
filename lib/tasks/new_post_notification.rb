@@ -4,20 +4,20 @@ module Tasks
 
     def self.perform(post_id)
       post_id = post_id.to_i
-      info "new post notify: #{post_id}"
+      self.info "new post notify: #{post_id}"
       # wait to avoid mysql sync delay between master and slave
       sleep(1)
       post = Post.find_by_id(post_id)
       if not post
-        info "  no post: #{post_id}"
+        self.info "  no post: #{post_id}"
         return
       end
-      info "  subject: #{post.subject}"
-      info "  user: #{post.user.name}"
+      self.info "  subject: #{post.subject}"
+      self.info "  user: #{post.user.name}"
       begin
         NotificationMailer.new_post_notify(post).deliver
       rescue Exception => e
-        error(e)
+        self.error(e)
       end
     end
 
