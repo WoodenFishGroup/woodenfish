@@ -21,12 +21,12 @@ module Tasks
       end
     end
 
-    def info(message)
+    def self.info(message)
       puts message
       Rails.logger.info message
     end
 
-    def error(e)
+    def self.error(e)
       puts e.message
       Rails.logger.error e.message
       puts e.backtrace.inspect
