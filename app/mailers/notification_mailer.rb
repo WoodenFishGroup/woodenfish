@@ -11,6 +11,7 @@ class NotificationMailer < ActionMailer::Base
     @new_posts = new_posts.sort {|x,y| x.user.id <=> y.user.id}
     @new_comments = new_comments.sort {|x,y| [x.post.id, x.created] <=> [y.post.id, y.created]}
     @top_starred_posts = top_starred_posts.sort {|x,y| [y.stars_count, y.created] <=> [x.stars_count, x.created]}
+    @ranked_users = User.find(:all).sort {|x,y| [y.score, y.id] <=> [x.score, x.id]}
     mail(from: default_from, to: user.email, subject: subject)
   end
 

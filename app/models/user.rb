@@ -52,6 +52,37 @@ class User < ActiveRecord::Base
     @stared_post_ids.include?(post.id)
   end
 
+  def score
+    s = 0
+    posts = Post.where(:user_id => id, :is_deleted => 0)
+    comments = Comment.where(:user_id => id, :is_deleted => 0)
+    stars = Star.where(:user_id => id)
+    posts.each do |p|
+      s += [0, 20 + p.comments_count + p.stars_count - days_to_now(p.created)].max
+    end
+    comments.each do |c|
+      s += [0, 8 - days_to_now(c.created)].max
+    end
+    stars.each do |st|
+      s += [0, 5 - days_to_now(st.created_at)].max
+    end
+    # for new users
+    s += [0, 10 - days_to_now(created)].max
+    s
+  end
+
+  def posts_count
+    Post.where(:user_id => id, :is_deleted => 0).size
+  end
+
+  def comments_count
+    Comment.where(:user_id => id, :is_deleted => 0).size
+  end
+
+  def stars_count
+    Star.where(:user_id => id).size
+  end
+
   def self.find_new_post_notified_users
     # TODO may need cache
     User.find(:all).select {|u| u.notify_policy.new_post_notify? }
@@ -90,6 +121,10 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  def days_to_now(time)
+    ((Time.now.utc - time) / (3600 * 24)).to_int
+  end
 
   def self.query_hulu_employee_avartar(name, email)
     url = 'http://intranet.hulu.com/Contacts/GetContacts2.aspx?office=0'
