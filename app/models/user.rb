@@ -54,17 +54,21 @@ class User < ActiveRecord::Base
 
   def score
     s = 0
-    posts = Post.where(:user_id => id, :is_deleted => 0)
-    comments = Comment.where(:user_id => id, :is_deleted => 0)
-    stars = Star.where(:user_id => id)
+    posts = Post.where(:user_id => id, :is_deleted => 0).order("id desc")
+    comments = Comment.where(:user_id => id, :is_deleted => 0).order("id desc")
+    stars = Star.where(:user_id => id).order("id desc")
     posts.each do |p|
       s += [0, 20 + p.comments_count + p.stars_count - days_to_now(p.created)].max
     end
+    sub_weight = 0
     comments.each do |c|
-      s += [0, 8 - days_to_now(c.created)].max
+      s += [0, 8 - sub_weight - days_to_now(c.created)].max
+      sub_weight += 1
     end
+    sub_weight = 0
     stars.each do |st|
-      s += [0, 5 - days_to_now(st.created_at)].max
+      s += [0, 5 - sub_weight - days_to_now(st.created_at)].max
+      sub_weight += 1
     end
     # for new users
     s += [0, 20 - days_to_now(created) * 2].max
