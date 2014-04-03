@@ -1,6 +1,9 @@
 <% content_for :body do %>
   <div>
-    <div><h2><%= @post.subject %></h2></div>
+    <% post_url = "#{Rails.configuration.portal_root}?post_id=#{@post.id}" %>
+    <div><h2>
+      <a style="font-weight:bold;text-decoration:none" href="<%= post_url %>"><%= @post.subject %></a>
+    </h2></div>
     <div style="float:left;padding-right:10px">
       <% if is_mail_safe_image?(@post.user.avartar) %>
         <img style="width:40px;height:40px;border-radius: 5px;" src="<%= @post.user.avartar.html_safe %>" />

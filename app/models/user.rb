@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
       s += [0, 5 - days_to_now(st.created_at)].max
     end
     # for new users
-    s += [0, 10 - days_to_now(created)].max
+    s += [0, 20 - days_to_now(created) * 2].max
     s
   end
 

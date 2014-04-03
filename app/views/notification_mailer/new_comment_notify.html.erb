@@ -14,7 +14,10 @@
   </div>
 
   <div style="border-top: 1px solid #dddddd;">
-    <p><h2><%= @comment.post.subject %></h2></p>
+    <% post_url = "#{Rails.configuration.portal_root}?post_id=#{@comment.post_id}" %>
+    <p><h2>
+      <a style="font-weight:bold;text-decoration:none" href="<%= post_url %>"><%= @comment.post.subject %></a>
+    </h2></p>
     <div style="float:left;padding-right:10px">
       <% if is_mail_safe_image?(@comment.post.user.avartar) %>
         <img style="width:40px;height:40px;border-radius: 5px;" src="<%= @comment.post.user.avartar.html_safe %>" />
