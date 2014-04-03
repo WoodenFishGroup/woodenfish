@@ -27,7 +27,7 @@
           <div class="media-body">
             <%= render :partial => 'posts/post', :locals => {:post => post, :mode => "view"} %>
             <div id="post-comment-section-<%= post.id %>" class="post-comment">
-              <div id="post-comment-<%= post.id %>">
+              <div id="post-comment-<%= post.id %>" style="padding-top:5px">
                   <% comment_count = post.comments_count %>
                   <% if comment_count > 0 %>
                     <%= link_to "#{comment_count} comment#{"s" if comment_count > 1}",
