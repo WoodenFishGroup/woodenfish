@@ -34,7 +34,7 @@ class PostsController < LoginController
   def search
     q = params[:q].to_s.gsub(/[^\p{Word}]/, ' ')
     ids = Post.select("id, MATCH(subject,body) against('#{q}') AS score")
-      .where("MATCH(subject,body) against('#{q}')").map(&:id)
+      .where("MATCH(subject,body) against('#{q}') and is_deleted=0").map(&:id)
     if ids.size > 0
       @posts = Post.where(:id => ids)
         .includes(:user)
@@ -42,7 +42,7 @@ class PostsController < LoginController
         .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
         .order("FIELD(id, #{ids.join ','})")
     else
-      @posts = Post.where("subject LIKE '%#{q}%' OR body LIKE'%#{q}%'")
+      @posts = Post.where("(subject LIKE '%#{q}%' OR body LIKE'%#{q}%') and is_deleted=0")
         .includes(:user)
         .includes(:stars)
         .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
