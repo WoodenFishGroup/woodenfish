@@ -19,7 +19,7 @@
   <% end %>
   <ul class="list-group" style="margin-left:0px;background-color:#dddddd">
     <% @posts.each do |post| %>
-      <li class="list-group-item post" style="padding:15px;margin-bottom:15px" id="post-<%= post.id %>">
+      <li class="list-group-item post" style="padding:15px;padding-top:5px;margin-bottom:10px" id="post-<%= post.id %>">
         <div class="media">
           <div style="float:left;width:60px;margin-right:10px;text-align:center">
             <%= render :partial => 'stars/star', :locals => {:post => post} %>
@@ -35,7 +35,7 @@
                           :method => :get, :remote => true %>
                   <% end %>
               </div>
-              <div style="margin-right:60px;margin-top:10px">
+              <div style="margin-right:60px;margin-top:5px">
                 <script>
                   $(document).on("page:load ready", function(){
                     $('#comment-form-<%= post.id %>').bind('ajax:success', function(xhr, data, status){
@@ -51,7 +51,7 @@
                     });
                   });
                 </script>
-                <%= form_tag "comments", :id => "comment-form-#{post.id}", :style => "margin-bottom:10px",
+                <%= form_tag "comments", :id => "comment-form-#{post.id}", :style => "margin-bottom:0px",
                     :remote => true, :method => "POST" do %>
                   <input type="hidden" name="post_id" value="<%= post.id %>" />
                   <input type="hidden" name="user_id" value="<%= get_current_user_id %>" />

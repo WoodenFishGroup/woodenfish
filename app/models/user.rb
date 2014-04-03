@@ -68,11 +68,11 @@ class User < ActiveRecord::Base
     sub_weight = 0
     stars.each do |st|
       s += [0, 5 - sub_weight - days_to_now(st.created_at)].max
-      sub_weight += 1
+      sub_weight += 0.5
     end
     # for new users
     s += [0, 20 - days_to_now(created) * 2].max
-    s
+    s.to_int
   end
 
   def posts_count

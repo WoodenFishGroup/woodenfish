@@ -32,7 +32,7 @@
             class="pull-right media-object"
             src="<%= post.user.avartar.html_safe %>" />
         </div>
-        <div><b><%= post.user.name %></b></div>
+        <div><span><%= post.user.name %></span></div>
         <div class="time_text"><%= time_ago_in_words(post.created) %> ago</div>
       </div>
     </div>
