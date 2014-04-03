@@ -4,6 +4,7 @@ Wf::Application.routes.draw do
   get  "/health_check" => "health_check#health_check"
 
   root "posts#index"
+  get "search" => "posts#search"
   put  "home/save_profile"
 
   put "stars/star_post"
@@ -24,7 +25,7 @@ Wf::Application.routes.draw do
   end
   resources :comments, :except => [:index]
 
-  mount Resque::Server, :at => "/resque"  
+  mount Resque::Server, :at => "/resque"
 
   #get "home/index"
   #resources :home

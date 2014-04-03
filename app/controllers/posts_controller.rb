@@ -31,6 +31,26 @@ class PostsController < LoginController
     render "list"
   end
 
+  def search
+    q = params[:q].to_s.gsub(/[^\p{Word}]/, ' ')
+    ids = Post.select("id, MATCH(subject,body) against('#{q}') AS score")
+      .where("MATCH(subject,body) against('#{q}')").map(&:id)
+    if ids.size > 0
+      @posts = Post.where(:id => ids)
+        .includes(:user)
+        .includes(:stars)
+        .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
+        .order("FIELD(id, #{ids.join ','})")
+    else
+      @posts = Post.where("subject LIKE '%#{q}%' OR body LIKE'%#{q}%'")
+        .includes(:user)
+        .includes(:stars)
+        .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
+        .order("id DESC")
+    end
+    render "list"
+  end
+
   def edit
     @post_id = params[:post_id]
     @post = Post.find(params[:post_id])

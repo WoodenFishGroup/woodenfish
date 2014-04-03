@@ -8,6 +8,7 @@
   <style>
     body {
       padding-top: 60px; /* to make the container go all the way to the bottom of the topbar */
+      background-color:#ddd;
     }
     th, td {
       text-align: center !important;
@@ -30,24 +31,78 @@
     .navbar .navbar-inner .nav {
       padding: 5px;
     }
+    #f {
+      position:absolute; top:14px; left:42%; width:16%; height: 26px;
+      border:2px #999 solid; border-radius:25px;
+      background:transparent url('search.png') no-repeat right;
+      background-origin:border-box; background-position-y:-1px;
+    }
+    #f:hover, #f:focus, #f.focus {border:2px #bbb solid}
+    #f:focus, #f.focus {background-color:#f1f1f1; background-position-y:-29px}
+    #f:focus #q, #f.focus #q {color:#222}
+    #q {
+      width:100%; border:none; color:#aaa; outline:none; font-size:13px;
+      padding:4px 21px 0 10px; background:transparent;
+    }
+    #spanner {position:absolute; right:5px; top:0px; width:18px; height:18px}
+    #spanner:hover {cursor: pointer}
   </style>
+  <script>
+    $(document).ready(function() {
+      var input = $('#q');
+      var _keyEventIsChar = function(e) {
+        if (e.metaKey || e.altKey || e.ctrlKey) {return false;}
+        return (e.which > 64 && e.which < 91)  ||       // a-z
+               (e.which > 47 && e.which < 58)  ||       // 0-9
+               (e.which > 95 && e.which < 106) ||       // 0-9 (num pad)
+               $.inArray(e.which, [59, 61, 107, 109, 187, 188, 189, 222]) != -1;
+      };
+      input.focusin( function() {input.parent().addClass('focus');});
+      input.focusout(function() {input.parent().removeClass('focus');});
+      $('#spanner').click(function() {$('form#search').submit();});
+      $(document).keydown(function(e) {
+        if (e.target == input[0] && e.which == 27) {    // Esc
+          input.blur();
+          return;
+        }
+        if (!e.target.tagName.match(/BODY|DIV/)) {return;}
+        if (_keyEventIsChar(e) && !input.is(':focus')) {
+          input.val('');
+          input.focus();
+        } else if (e.which == 191) {                    // '/'
+          input.focus();
+          input.select();
+          e.preventDefault();
+        }
+      });
+      var url = window.location.href;
+      var q;
+      if (url.indexOf('?q=') > 0) q = url.split('?q=')[1];
+      if (q.length > 0) {
+        input.val(decodeURIComponent(q.replace(/\+/g, ' ')));
+      }
+    });
+  </script>
 </head>
 
-<body style="background-color:#dddddd">
+<body>
   <div class="navbar navbar-inverse navbar-fixed-top" id='top-nav'>
     <div class="navbar-inner">
       <div class="container" style="width:75%">
         <div> <a class="navbar-brand" href="/">Wooden Fish</a> </div>
-        <div class="">
-          <ul class="nav" style="font-size:16px">
-            <li class="active" id='nav-home'>
-              <a href="/">Home</a>
-            </li>
-            <li id='nav-stared'>
-              <a href="/posts/stared">Starred</a>
-            </li>
-          </ul>
-        </div>
+        <ul class="nav" style="font-size:16px">
+          <li class="active" id='nav-home'>
+            <a href="/">Home</a>
+          </li>
+          <li id='nav-stared'>
+            <a href="/posts/stared">Starred</a>
+          </li>
+        </ul>
+
+        <form id='search' class='navbar-left' action='/search'><div id='f'>
+          <input name='q' id='q' type='text' autocomplete='off' />
+          <span id='spanner'></span>
+        </div></form>
         <div id="user_profile">
           <%= render :partial => 'layouts/profile' %>
         </div>

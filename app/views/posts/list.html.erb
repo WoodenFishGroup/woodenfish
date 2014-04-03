@@ -13,7 +13,11 @@
 <div>
   <% if @posts.empty? %>
     <div class="container" style="width:50%">
-      <h4>No posts found! Explore <a href="/">home page</a> and add more stars!</h4>
+      <% if action_name == 'search' %>
+        <h4>No posts found - please try again with different search terms.</h4>
+      <% else %>
+        <h4>No posts found! Explore <a href="/">home page</a> and add more stars!</h4>
+      <% end %>
       <%= image_tag "woodenfish-loading.jpg", :class => "img-circle" %>
     </div>
   <% end %>
