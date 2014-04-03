@@ -13,7 +13,7 @@
         </span>
       </div>
       <div>
-        <%= auto_link(simple_format(comment.body)).html_safe %>
+        <%= render_text_to_html(comment.body).html_safe %>
       </div>
     </div>
 </div>

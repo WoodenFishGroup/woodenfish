@@ -10,7 +10,7 @@
     </div>
     <div><b><%= @comment.user.name %></b></div>
     <div style="color:#aaaaaa"><b>commented via <%= @comment.human_readable_source %></b></div>
-    <p> <%= auto_link(simple_format(@comment.body)).html_safe %> </p>
+    <p> <%= render_text_to_html(@comment.body).html_safe %> </p>
   </div>
 
   <div style="border-top: 1px solid #dddddd;">
@@ -27,7 +27,7 @@
     </div>
     <div><b><%= @comment.post.user.name %></b></div>
     <div style="color:#aaaaaa"><b><%= @comment.post.created.strftime("%F") %></b></div>
-    <p> <%= auto_link(simple_format(@comment.post.body)).html_safe %> </p>
+    <p> <%= render_text_to_html(@comment.post.body).html_safe %> </p>
   </div>
 
 <% end %>

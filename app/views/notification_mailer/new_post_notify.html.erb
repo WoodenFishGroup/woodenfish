@@ -17,7 +17,7 @@
   </div>
 
   <div style="border-top: 1px solid #dddddd;">
-    <p> <%= auto_link(simple_format(@post.body)).html_safe %> </p>
+    <p> <%= render_text_to_html(@post.body).html_safe %> </p>
     <p><a href="<%= Rails.configuration.portal_root %>stars/star_post?post_id=<%= @post.id %>" target="_blank">Star It</a> | <a href="<%= Rails.configuration.portal_root %>" target="_blank">WoodenFish</a> </p>
   </div>
 <% end %>

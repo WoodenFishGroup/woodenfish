@@ -38,7 +38,7 @@
     </div>
     <div style="padding-top:10px;padding-bottom:5px;margin-top:0px;margin-bottom:0px;border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd" class="post-body-content">
       <% if is_view %>
-        <%= auto_link(simple_format(post.body)).html_safe %>
+        <%= render_text_to_html(post.body).html_safe %>
       <% else %>
         <%= text_area_tag :post_body, post.body, :rows => post.body.count("\n"), :style => "width:100%" %>
       <% end %>

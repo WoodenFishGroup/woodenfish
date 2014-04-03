@@ -1,5 +1,6 @@
 require 'active_support/all'
 require 'digest/md5'
+require 'redcarpet'
 
 module ApplicationHelper
   @current_user_sso = {}
@@ -70,4 +71,18 @@ module ApplicationHelper
     "http://www.gravatar.com/avatar/#{hash}?d=identicon"
   end
 
+  def render_text_to_html(raw_text)
+    render = Redcarpet::Render::HTML.new()
+    markdown = Redcarpet::Markdown.new(render, autolink: true)
+
+    marker = "!m"
+
+    if raw_text.include? marker
+      # render as Markdown IF contains marker
+      return markdown.render(raw_text.gsub(marker, ''))
+    else
+      # render as plain text Otherwise
+      return auto_link(simple_format(raw_text))
+    end
+  end
 end
