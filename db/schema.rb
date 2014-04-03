@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403095300) do
+ActiveRecord::Schema.define(version: 20140327041341) do
 
   create_table "comments", force: true do |t|
     t.string   "commentable_type",                 null: false
@@ -35,22 +35,21 @@ ActiveRecord::Schema.define(version: 20140403095300) do
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "posts", force: true do |t|
-    t.string   "subject",                                   null: false
+    t.string   "subject",                        null: false
     t.text     "body"
-    t.integer  "user_id",                                   null: false
-    t.datetime "created",                                   null: false
+    t.integer  "user_id",                        null: false
+    t.datetime "created",                        null: false
     t.string   "tags"
-    t.string   "source",         limit: 32
+    t.string   "source"
     t.string   "source_id"
-    t.boolean  "is_deleted",                default: false, null: false
-    t.integer  "comments_count",            default: 0,     null: false
+    t.boolean  "is_deleted",     default: false, null: false
+    t.integer  "comments_count", default: 0,     null: false
     t.string   "starred_by"
     t.datetime "modified"
     t.integer  "modified_by"
-    t.integer  "stars_count",               default: 0,     null: false
+    t.integer  "stars_count",    default: 0,     null: false
   end
 
-  add_index "posts", ["body", "subject"], name: "searchable", type: :fulltext
   add_index "posts", ["modified_by"], name: "index_posts_on_modified_by", using: :btree
   add_index "posts", ["source", "source_id"], name: "index_posts_on_source_and_source_id", unique: true, using: :btree
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
