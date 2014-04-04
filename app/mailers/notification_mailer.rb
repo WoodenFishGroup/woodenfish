@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 class NotificationMailer < ActionMailer::Base
   layout 'mail'
   add_template_helper(ApplicationHelper)

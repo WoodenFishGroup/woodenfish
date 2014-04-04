@@ -100,6 +100,14 @@ class PostsController < LoginController
     render :json => post
   end
 
+  def send_summary
+    new_posts = Post.where(:is_deleted => 0).last(5)
+    new_comments = Comment.where(:is_deleted => 0).last(5)
+    top_posts = Post.where("stars_count>0 and is_deleted=0").order('stars_count desc').limit(10)
+    NotificationMailer.summary(current_user, new_posts, new_comments, top_posts).deliver
+    render :text => "ok"
+  end
+
   # params should look like:
   # {
   #   :user => {

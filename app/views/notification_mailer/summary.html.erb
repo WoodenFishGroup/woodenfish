@@ -18,8 +18,10 @@
             <a style="font-weight:bold;text-decoration:none" href="<%= post_url %>"><%= post.subject %></a>
             <p>
             <span style="font-size:24px;color:#aaa">“</span>
-            <% body = post.body[0..300].sub('\n', ' ') %>
-            <%= body %> <%= "..." if post.body.size > 300 %>
+            <% html_body = render_text_to_html(post.body) %>
+            <% plain_body = Nokogiri::HTML.parse(html_body).text %>
+            <% body = plain_body[0..300].sub('\n', ' ') %>
+            <%= body %> <%= "..." if plain_body.size > 300 %>
             <span style="font-size:24px;color:#aaa">”</span>
             </p>
           </td>
@@ -72,9 +74,9 @@
           <td style="vertical-align:middle;padding-top:10px;padding-bottom:10px;width:75%;">
             <% str1 = '<span style="font-size:24px;color:#aaa">“</span>' %>
             <% str2 = '<span style="font-size:24px;color:#aaa">”</span>' %>
+            <% html_body = render_text_to_html(comment.body[0..100]) %>
             <% body_extra = comment.body.size > 100 ? " ..." : "" %>
-            <% html_body = render_text_to_html(comment.body]) %>
-            <%= (str1 + simple_format(html_body)[0..100][3..-5] + body_extra + str2).html_safe %>
+            <%= (str1 + simple_format(html_body)[3..-5] + body_extra + str2).html_safe %>
           </td>
         </tr>
         <% last_post_id = comment.post.id %>

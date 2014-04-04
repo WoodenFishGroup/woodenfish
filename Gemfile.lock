@@ -70,6 +70,7 @@ GEM
     multi_json (1.8.4)
     mysql2 (0.3.15)
     newrelic_rpm (3.7.3.204)
+    nokogiri (1.5.10)
     polyglot (0.3.4)
     rack (1.5.2)
     rack-protection (1.5.2)
@@ -168,6 +169,7 @@ DEPENDENCIES
   libv8 (~> 3.11.8.3)
   mysql2
   newrelic_rpm
+  nokogiri
   rails (= 4.0.3)
   rails_autolink
   rake

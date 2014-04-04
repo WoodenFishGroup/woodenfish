@@ -18,9 +18,10 @@ Wf::Application.routes.draw do
   post "posts/portal_submit"
   get  "posts/sample"
   get  "posts/add_notification"
+  get  "posts/send_summary"
   get  "posts/stared"
 
-  resources :posts do 
+  resources :posts do
     resources :comments, :only => [:index]
   end
   resources :comments, :except => [:index]
@@ -30,7 +31,7 @@ Wf::Application.routes.draw do
   #get "home/index"
   #resources :home
   #resources :post
-  
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
