@@ -5,8 +5,8 @@
 <%= form_tag "posts/save", :method => "PUT", :style => "margin-bottom:0px" do %>
   <input type="hidden" name="post_id" value="<%= post.id %>" />
 
-  <div style="margin-top:10px;float:right;width:60px;text-align:center;vertical-align:middle">
-    <% if post.user_id == get_current_user_id %>
+  <% if post.user_id == get_current_user_id %>
+    <div style="margin-top:10px;float:right;width:60px;text-align:center;vertical-align:middle">
       <% if is_view %>
         <%= link_to "edit", {:controller => "posts", :action => "edit", :post_id => post.id},
           :method => :get, :remote => true, :style => "color:#dddddd" %>
@@ -15,18 +15,20 @@
         <%= submit_tag "save", :style => "width:55px" %>
         <%= submit_tag "cancel", :style => "width:55px" %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
   <div style="margin-right:60px">
     <div>
       <div>
           <% if is_view %>
-            <h3 class="media-heading post-subject" data-post-id="<%= post.id %>"> <%= post.subject %> </h3>
+            <h3 style="font-weight:normal" class="media-heading post-subject" data-post-id="<%= post.id %>">
+              <%= post.subject %>
+            </h3>
           <% else %>
             <h3 class="media-heading"> <%= text_field_tag :post_subject, post.subject, :style => "width:100%" %> </h3>
           <% end %>
       </div>
-      <div style="padding-bottom:10px;padding-top:0px">
+      <div>
         <div style="float:left;padding-right:10px">
           <img style="width:40px;height:40px;border-radius: 5px;"
             class="pull-right media-object"
@@ -36,7 +38,8 @@
         <div class="time_text"><%= time_ago_in_words(post.created) %> ago</div>
       </div>
     </div>
-    <div style="padding-top:10px;padding-bottom:5px;margin-top:0px;margin-bottom:0px;border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd" class="post-body-content">
+    <div style="padding-top:10px;padding-bottom:5px;margin-top:15px;margin-bottom:0px;border-top: 1px solid #dddddd;border-bottom: 1px solid #dddddd"
+      class="post-body-content">
       <% if is_view %>
         <%= render_text_to_html(post.body).html_safe %>
       <% else %>

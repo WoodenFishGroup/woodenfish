@@ -23,7 +23,7 @@
   <% end %>
   <ul class="list-group" style="margin-left:0px;background-color:#dddddd">
     <% @posts.each do |post| %>
-      <li class="list-group-item post" style="padding:15px;padding-top:5px;margin-bottom:10px" id="post-<%= post.id %>">
+      <li class="list-group-item post" style="padding:15px;padding-top:8px;margin-bottom:10px" id="post-<%= post.id %>">
         <div class="media">
           <div style="float:left;width:60px;margin-right:10px;text-align:center">
             <%= render :partial => 'stars/star', :locals => {:post => post} %>
@@ -31,7 +31,7 @@
           <div class="media-body">
             <%= render :partial => 'posts/post', :locals => {:post => post, :mode => "view"} %>
             <div id="post-comment-section-<%= post.id %>" class="post-comment">
-              <div id="post-comment-<%= post.id %>" style="padding-top:5px">
+              <div id="post-comment-<%= post.id %>" style="padding-top:10px">
                   <% comment_count = post.comments_count %>
                   <% if comment_count > 0 %>
                     <%= link_to "#{comment_count} comment#{"s" if comment_count > 1}",
@@ -39,7 +39,7 @@
                           :method => :get, :remote => true %>
                   <% end %>
               </div>
-              <div style="margin-right:60px;margin-top:5px">
+              <div style="margin-right:60px;margin-top:10px">
                 <script>
                   $(document).on("page:load ready", function(){
                     $('#comment-form-<%= post.id %>').bind('ajax:success', function(xhr, data, status){
