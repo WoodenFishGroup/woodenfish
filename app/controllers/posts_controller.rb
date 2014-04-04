@@ -2,6 +2,7 @@
 require 'json'
 require 'resque'
 require 'tasks/new_post_notification'
+require 'will_paginate/array'
 
 class PostsController < LoginController
   POSTS_PER_PAGE = 20
@@ -34,21 +35,26 @@ class PostsController < LoginController
 
   def search
     q = params[:q].to_s.gsub(/[^\p{Word}]/, ' ')
-    ids = Post.select("id, MATCH(subject,body) against('#{q}') AS score")
-      .where("MATCH(subject,body) against('#{q}') and is_deleted=0").map(&:id)
-    if ids.size > 0
-      @posts = Post.where(:id => ids)
-        .includes(:user)
-        .includes(:stars)
-        .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
-        .order("FIELD(id, #{ids.join ','})")
-    else
-      @posts = Post.where("(subject LIKE '%#{q}%' OR body LIKE'%#{q}%') and is_deleted=0")
-        .includes(:user)
-        .includes(:stars)
-        .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
-        .order("id DESC")
+    _find_by_ids = proc do |ids|
+        Post.where(:id => ids).order("FIELD(id, #{ids.join ','})")
+        .includes([:user, :stars])
+      end
+    ids = Post.select("id, MATCH(subject,body) AGAINST('#{q}') AS score")
+      .where("MATCH(subject,body) AGAINST('#{q}')").order('score DESC').map(&:id)
+    @posts = if ids.size > 0
+        _find_by_ids.call ids
+      else
+        Post.where("(subject LIKE '%#{q}%' OR body LIKE'%#{q}%')").order('id DESC')
+        .includes([:user, :stars])
+      end
+    ids_by_user = Post.select('id')
+      .where("user_id IN (SELECT id FROM users WHERE name LIKE '%#{q}%')")
+      .order('id DESC').map(&:id)
+    if ids_by_user.size > 0
+      @posts = (_find_by_ids.call(ids_by_user) + @posts).uniq(&:id)
     end
+    @posts.reject! { |p| p.is_deleted }
+    @posts = @posts.paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
     render "list"
   end
 
