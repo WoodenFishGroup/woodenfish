@@ -53,7 +53,7 @@ class PostsController < LoginController
     if ids_by_user.size > 0
       @posts = (_find_by_ids.call(ids_by_user) + @posts).uniq(&:id)
     end
-    @posts.reject! { |p| p.is_deleted }
+    @posts = @posts.to_a.reject { |p| p.is_deleted }
     @posts = @posts.paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
     render "list"
   end
