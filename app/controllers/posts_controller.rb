@@ -118,7 +118,7 @@ class PostsController < LoginController
     user_info["email"] = params["user_email"] if params["user_email"]
     post_info = {
       "source" => "portal",
-      "source_id" => Time.now.utc.to_i.to_s
+      "source_id" => "post-#{Time.now.utc.to_i.to_s}@woodenfish.hulu.com"
     }.merge(params["post"] || {})
     post_info["subject"] = params["post_subject"] if params["post_subject"]
     post_info["body"] = params["post_body"] if params["post_body"]
