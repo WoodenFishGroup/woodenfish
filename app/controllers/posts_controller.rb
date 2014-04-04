@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'json'
 require 'resque'
 require 'tasks/new_post_notification'
