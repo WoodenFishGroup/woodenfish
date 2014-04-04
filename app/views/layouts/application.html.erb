@@ -78,7 +78,7 @@
       var url = window.location.href;
       var q;
       if (url.indexOf('?q=') > 0) q = url.split('?q=')[1];
-      if (q.length > 0) {
+      if (q && q.length > 0) {
         input.val(decodeURIComponent(q.replace(/\+/g, ' ')));
       }
     });
