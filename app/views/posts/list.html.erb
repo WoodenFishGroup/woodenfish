@@ -13,42 +13,18 @@
 <div>
   <% if @posts.empty? %>
     <div class="container" style="width:50%">
+      <div style="text-align:center">
+        <br/>
       <% if action_name == 'search' %>
-        <h4>No posts found - please try again with different search terms.</h4>
+        <h4>Nothing found.</h4>
+        <h4>Please try different terms.</h4>
       <% else %>
-        <h4>No posts found! Explore <a href="/">home page</a> and add more stars!</h4>
+        <h4>Nothing found.</h4>
+        <h4>Explore <a href="/">home page</a> and add more stars!</h4>
       <% end %>
-      <%= image_tag "woodenfish-loading.jpg", :class => "img-circle" %>
-    </div>
-  <% end %>
-  <ul class="list-group" style="margin-left:0px;background-color:#dddddd">
-    <% @posts.each do |post| %>
-      <li class="list-group-item post" style="padding:15px;padding-top:8px;margin-bottom:10px" id="post-<%= post.id %>">
-        <div class="media">
-          <div style="float:left;width:60px;margin-right:10px;text-align:center">
-            <%= render :partial => 'stars/star', :locals => {:post => post} %>
-          </div>
-          <div class="media-body">
-            <%= render :partial => 'posts/post', :locals => {:post => post, :mode => "view"} %>
-            <div id="post-comment-section-<%= post.id %>" class="post-comment">
-              <div id="post-comment-<%= post.id %>" style="padding-top:10px">
-                  <% comment_count = post.comments_count %>
-                  <% if comment_count > 0 %>
-                    <%= link_to "#{comment_count} comment#{"s" if comment_count > 1}",
-                          post_comments_path(post.id),
-                          :method => :get, :remote => true %>
-                  <% end %>
-              </div>
-              <div style="margin-right:60px;margin-top:10px">
-                <script>
-                  $(document).on("page:load ready", function(){
-                    $('#comment-form-<%= post.id %>').bind('ajax:success', function(xhr, data, status){
-                      $('#comment-body-<%= post.id %>').val("").attr("disabled", false);
-                      $.get('<%= post_comments_path(post.id) %>');
-                    });
-                    $('#comment-form-<%= post.id %> textarea').keypress(function(event) {
-                      var node = $(this);
-                      if (event.which == 13 && event.ctrlKey) {
+      <div>
+      <br/>
+      <%= image_tag "woodenfish-loading.jpg", :class => "img-circle" %> </div> <% end %> <ul class="list-group" style="margin-left:0px;background-color:#dddddd"> <% @posts.each do |post| %> <li class="list-group-item post" style="padding:15px;padding-top:8px;margin-bottom:10px" id="post-<%= post.id %>"> <div class="media"> <div style="float:left;width:60px;margin-right:10px;text-align:center"> <%= render :partial => 'stars/star', :locals => {:post => post} %> </div> <div class="media-body"> <%= render :partial => 'posts/post', :locals => {:post => post, :mode => "view"} %> <div id="post-comment-section-<%= post.id %>" class="post-comment"> <div id="post-comment-<%= post.id %>" style="padding-top:10px"> <% comment_count = post.comments_count %> <% if comment_count > 0 %> <%= link_to "#{comment_count} comment#{"s" if comment_count > 1}", post_comments_path(post.id), :method => :get, :remote => true %> <% end %> </div> <div style="margin-right:60px;margin-top:10px"> <script> $(document).on("page:load ready", function(){ $('#comment-form-<%= post.id %>').bind('ajax:success', function(xhr, data, status){ $('#comment-body-<%= post.id %>').val("").attr("disabled", false); $.get('<%= post_comments_path(post.id) %>'); }); $('#comment-form-<%= post.id %> textarea').keypress(function(event) { var node = $(this); if (event.which == 13 && event.ctrlKey) {
                         $('#comment-form-<%= post.id %>').submit();
                         node.attr("disabled", true);
                       }
