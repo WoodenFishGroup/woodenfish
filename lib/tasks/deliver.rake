@@ -24,7 +24,7 @@ namespace :deliver do
       new_comments = Comment.where(:created => check_time..now, :is_deleted => 0)
       top_posts = Post.where(\
           ["created>? and created<? and stars_count>0 and is_deleted=0", long_before, check_time])\
-          .order('stars_count desc').limit(10)
+          .order('stars_count desc, id desc').limit(10)
       info "  sending to #{user.name}, #{user.email}"
       info "    new posts: #{new_posts.map {|p| p.subject}}"
       info "    new comments: #{new_comments.map {|c| "user:" + c.user_id.to_s + " on post " + c.post_id.to_s}}"
