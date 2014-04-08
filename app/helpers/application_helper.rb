@@ -85,7 +85,7 @@ module ApplicationHelper
 
     if raw_text.include? marker
       # render as Markdown IF contains marker
-      return markdown.render(raw_text.gsub(marker, ''))
+      return markdown.render(raw_text.sub(marker, ''))
     else
       # render as plain text Otherwise
       return auto_link(simple_format(raw_text))
