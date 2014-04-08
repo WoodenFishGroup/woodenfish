@@ -72,6 +72,10 @@ GEM
     newrelic_rpm (3.7.3.204)
     nokogiri (1.5.10)
     polyglot (0.3.4)
+    posix-spawn (0.3.8)
+    pygments.rb (0.5.4)
+      posix-spawn (~> 0.3.6)
+      yajl-ruby (~> 1.1.0)
     rack (1.5.2)
     rack-protection (1.5.2)
       rack
@@ -153,6 +157,7 @@ GEM
     will_paginate (3.0.4)
     will_paginate-bootstrap (0.2.2)
       will_paginate (>= 3.0.3)
+    yajl-ruby (1.1.0)
 
 PLATFORMS
   ruby
@@ -170,6 +175,7 @@ DEPENDENCIES
   mysql2
   newrelic_rpm
   nokogiri
+  pygments.rb
   rails (= 4.0.3)
   rails_autolink
   rake

@@ -71,9 +71,15 @@ module ApplicationHelper
     "http://www.gravatar.com/avatar/#{hash}?d=identicon"
   end
 
+  # create a custom renderer that allows highlighting of code blocks
+  class HTMLwithPygments < Redcarpet::Render::HTML
+    def block_code(code, language)
+       Pygments.highlight(code, lexer: language)
+    end
+  end
+  
   def render_text_to_html(raw_text)
-    render = Redcarpet::Render::HTML.new()
-    markdown = Redcarpet::Markdown.new(render, autolink: true)
+    markdown = Redcarpet::Markdown.new(HTMLwithPygments, fenced_code_blocks: true, autolink: true)
 
     marker = "!m"
 

@@ -65,4 +65,5 @@ gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem "twitter-bootstrap-rails"
 gem 'exception_notification'
 gem 'redcarpet' #For markdown
+gem 'pygments.rb'
 gem 'newrelic_rpm'
