@@ -22,14 +22,25 @@ class PostsController < LoginController
     render "list"
   end
 
-  def stared
+  def starred
     @posts = current_user.stared_posts
       .where("is_deleted=0")
       .includes(:user)
       .includes(:stars)
       .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
       .order("id DESC")
-    @nav = "stared"
+    @nav = "starred"
+    render "list"
+  end
+
+  def mine
+    @posts = current_user.posts
+      .where("is_deleted=0")
+      .includes(:user)
+      .includes(:stars)
+      .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
+      .order("id DESC")
+    @nav = "mine"
     render "list"
   end
 

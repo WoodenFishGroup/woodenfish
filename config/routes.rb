@@ -13,13 +13,14 @@ Wf::Application.routes.draw do
   get  "posts/edit"
   put  "posts/save"
   post "posts/feed"
+  get  "posts/starred"
+  get  "posts/mine"
 
   # NOTE for debugging
   post "posts/portal_submit"
   get  "posts/sample"
   get  "posts/add_notification"
   get  "posts/send_summary"
-  get  "posts/stared"
 
   resources :posts do
     resources :comments, :only => [:index]
