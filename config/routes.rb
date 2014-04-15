@@ -10,6 +10,8 @@ Wf::Application.routes.draw do
   put "stars/star_post"
   get "stars/star_post", :as => :star_post
 
+  get  "api/users"
+
   get  "posts/edit"
   put  "posts/save"
   post "posts/feed"
