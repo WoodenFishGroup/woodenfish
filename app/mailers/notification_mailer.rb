@@ -29,14 +29,12 @@ class NotificationMailer < ActionMailer::Base
          message_id: format_source_id(post.source_id))
   end
 
-  def new_comment_notify(comment)
-    users = User.find_new_comment_notified_users
-    aliases = users.map{|user| user.email}
+  def new_comment_notify(comment, emails)
     subject = "[WoodenFish Comment] #{comment.post.subject}"
     @comment = comment
-    logger.info "sending mail to #{aliases.to_s}"
+    logger.info "sending mail to #{emails.to_s}"
     mail(from: format_from(comment.user),
-         bcc: aliases,
+         bcc: emails,
          subject: subject,
          message_id: format_source_id(comment.source_id))
   end

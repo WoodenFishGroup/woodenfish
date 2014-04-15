@@ -34,6 +34,18 @@ class User < ActiveRecord::Base
     end
   end
 
+  def alias
+    name.sub(" ", "").downcase
+  end
+
+  def short_alias
+    name.split(" ")[0].downcase
+  end
+
+  def has_alias?(ali)
+    ali == self.alias || ali == short_alias
+  end
+
   def notify_policy
     @notify_policy ||= NotifyPolicy.new notification
     @notify_policy

@@ -9,14 +9,26 @@ module Tasks
       sleep(1)
       comment = Comment.find(comment_id)
       if not comment
-        self.info "  no comment: #{comment_id}"
+        self.info "  can't find comment, wrong comment_id: #{comment_id}"
         return
       end
       self.info "  post: #{comment.post.subject}"
       self.info "  commentted by: #{comment.user.name}"
       self.info "  body: #{comment.body}"
+      users = User.find_new_comment_notified_users
+      other_commented_users = comment.post.comments.map {|c| c.user_id}
+      comment_body_to_match = (comment.body + " ").downcase
+      reply_all = comment_body_to_match.match(/@all[\W]+/)
+      emails = []
+      users.each do |u|
+        reply = comment_body_to_match.match(/@#{u.alias}[\W]+/) || comment_body_to_match.match(/@#{u.short_alias}[\W]+/)
+        if u.id == comment.post.user_id || other_commented_users.include?(u.id) || reply_all || reply
+          emails << u.email
+        end
+      end
+      self.info "  send to: #{emails}"
       begin
-        NotificationMailer.new_comment_notify(comment).deliver
+        NotificationMailer.new_comment_notify(comment, emails).deliver
       rescue Exception => e
         self.error(e)
       end
