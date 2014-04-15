@@ -21,7 +21,7 @@ module Tasks
       reply_all = comment_body_to_match.match(/@all[\W]+/)
       emails = []
       users.each do |u|
-        reply = comment_body_to_match.match(/@#{u.alias}[\W]+/) || comment_body_to_match.match(/@#{u.short_alias}[\W]+/)
+        reply = comment_body_to_match.match(/@(#{u.alias}|#{u.short_alias})[\W]+/)
         if u.id == comment.post.user_id || other_commented_users.include?(u.id) || reply_all || reply
           emails << u.email
         end
