@@ -17,6 +17,7 @@ Wf::Application.routes.draw do
   post "posts/feed"
   get  "posts/starred"
   get  "posts/mine"
+  get  "posts/id_by_subject"
 
   # NOTE for debugging
   post "posts/portal_submit"

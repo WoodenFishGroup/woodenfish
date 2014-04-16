@@ -144,6 +144,16 @@ class PostsController < LoginController
     feed_impl(user_info, post_info)
   end
 
+  def id_by_subject
+    subject = params[:subject]
+    post = Post.where("subject = ?", subject).first
+    if post
+      render :json => {:id => post.id}
+    else
+      head 404
+    end
+  end
+
   private
 
   def feed_impl(user_info, post_info)
