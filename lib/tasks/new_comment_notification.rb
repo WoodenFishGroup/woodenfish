@@ -23,7 +23,9 @@ module Tasks
       users.each do |u|
         reply = comment_body_to_match.match(/@(#{u.alias}|#{u.short_alias})[\W]+/)
         if u.id == comment.post.user_id || other_commented_users.include?(u.id) || reply_all || reply
-          emails << u.email
+          if u.id != comment.user_id
+            emails << u.email
+          end
         end
       end
       self.info "  send to: #{emails}"
