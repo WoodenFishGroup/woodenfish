@@ -45,9 +45,9 @@
           <%= render :partial => 'posts/post', :locals => {:post => post, :mode => "view"} %>
           <div id="post-comment-section-<%= post.id %>" class="post-comment">
             <div id="post-comment-<%= post.id %>" style="padding-top:10px">
-              <% comment_count = post.comments_count %>
+              <% comment_count = post.comments.count%>
               <% if comment_count > 0 %>
-                <%= link_to "#{comment_count} comment#{"s" if comment_count > 1}", post_comments_path(post.id), :method => :get, :remote => true %>
+                <%= link_to "#{comment_count} comment#{"s" if comment_count > 1}", post_comments_path(post.id), :method => :get, :remote => true%>
               <% end %>
             </div>
             <div style="margin-right:60px;margin-top:10px">

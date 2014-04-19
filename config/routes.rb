@@ -29,6 +29,8 @@ Wf::Application.routes.draw do
     resources :comments, :only => [:index]
   end
   resources :comments, :except => [:index]
+  post "comments/save"
+  post "comments/delete"
 
   mount Resque::Server, :at => "/resque"
 

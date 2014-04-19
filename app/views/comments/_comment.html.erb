@@ -1,4 +1,4 @@
-<div class="media-body"
+<div class="comment-element media-body"
   style="padding-top:5px;margin-top: 5px; margin-right:60px; border-bottom:1px dotted #dddddd ">
     <div style="float:left;padding-right:10px">
       <img style="width:40px;height:40px;border-radius: 5px;"
@@ -11,9 +11,26 @@
         <span class="time_text">
           commented <%= time_ago_in_words(comment.created) %> ago
         </span>
+
+        <% if comment.user.id == get_current_user_id %>
+            <%= link_to "edit", "javascript:void(0)", :class => "link_button edit_link" %>
+            <%= link_to "delete", {:controller => "comments", :action => "delete", :comment_id => comment.id},
+              :method => :post, :remote => true, :class => "link_button delete_link" %>
+        <% end %>
       </div>
-      <div>
+      <div class="comment_body">
         <%= render_text_to_html(comment.body).html_safe %>
       </div>
+      <% if comment.user.id == get_current_user_id %>
+        <%= form_tag "/comments/save?comment_id=#{comment.id}", :class => "comments-edit-form", :id => "comment-edit-form-#{comment.id}", :style => "display:none; margin-bottom:0px",
+            :remote => true, :method => "POST" do %>
+          <div> Press Ctrl + Enter to submit </div>
+          <input type="hidden" name="comment_id" value="<%= comment.id%>" />
+          <%= text_area_tag :comment_body, comment.body, :id => "comment-edit-body-#{comment.id}",
+              :post_comments_path => post_comments_path(@post_id),
+              :class => "auto-grow comment-edit-area",
+              :style => "margin-bottom:0px;height:30px;width:100%;padding:5px;border:1px solid #dddddd" %>
+        <% end %>
+      <% end %>
     </div>
 </div>

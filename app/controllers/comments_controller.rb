@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class CommentsController < LoginController
   include ApplicationHelper
 
   COMMENTS_PER_PAGE = 100
@@ -21,6 +21,20 @@ class CommentsController < ApplicationController
       .order("id ASC")
       .paginate(page: params[:page], per_page: COMMENTS_PER_PAGE)
     @post_id = params[:post_id].to_i
+  end
+
+  def save
+    comment = Comment.find(params["comment_id"])
+    comment.body = params[:comment_body]
+    comment.save
+    render json: comment
+  end
+
+  def delete
+    comment = Comment.find(params["comment_id"])
+    comment.is_deleted = true
+    comment.save
+    render json: comment
   end
 
   private

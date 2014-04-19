@@ -1,1 +1,14 @@
-$('#post-comment-<%= @post_id %>').html('<%= escape_javascript(render(partial: 'comment', collection: @comments)) %>')
+<% post_comment_div_id = "#post-comment-#{@post_id}"%>
+$('<%=post_comment_div_id %>').html('<%= escape_javascript(render(partial: 'comment', collection: @comments)) %>')
+bindCtrlEnterForSubmit($('#post-comment-<%= @post_id %> .comment-edit-area'));
+$('<%=post_comment_div_id %>').on('ajax:success', function(xhr, data, status) {
+  var textarea = $(this).find('.comment-edit-area');
+  textarea.val("").attr("disabled", false);
+  $.get(textarea.attr('post_comments_path'));
+});
+$('<%=post_comment_div_id %> .edit_link').click(function(event){
+  var form_element = $(this).parents(".comment-element").find('form');
+  var paragraph_element = $(this).parents(".comment-element").find('.comment_body');
+  form_element.toggle();
+  paragraph_element.toggle();
+});
