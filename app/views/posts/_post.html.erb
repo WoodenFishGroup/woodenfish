@@ -2,7 +2,7 @@
 
 <div id="post-body-<%= post.id %>">
 
-<%= form_tag "posts/save", :method => "PUT", :style => "margin-bottom:0px" do %>
+<%= form_tag "/posts/save", :method => "PUT", :style => "margin-bottom:0px" do %>
   <input type="hidden" name="post_id" value="<%= post.id %>" />
 
   <% if post.user_id == get_current_user_id %>
