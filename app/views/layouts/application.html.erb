@@ -84,7 +84,13 @@
       }
     });
   </script>
-  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</style>
+  <style>
+    .mi { background: inherit; color: inherit; }
+    .mo { background: inherit; color: inherit; }
+    .mtext { background: inherit; color: inherit; }
+  </style>
 </head>
 
 <body>
@@ -219,6 +225,10 @@
       $("textarea.auto-grow").autoGrow();
     });
   </script>
+  <script>
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+  </script>
+
 </body>
 
 </html>
