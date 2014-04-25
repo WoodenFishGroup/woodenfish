@@ -1,0 +1,3 @@
+MAILTO=woodenfish-dev@hulu.com
+
+* * * * * source /home/deploy/.bashrc; export RBENV_VERSION=2.0.0-p451; cd /opt/woodenfish/; ruby ./collector/collector.rb prod > /opt/woodenfish/logs/prod.log
