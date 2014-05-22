@@ -92,18 +92,6 @@ class PostsController < LoginController
   end
 
   # NOTE: for easier debugging
-  def portal_submit
-    user_info = {"email" => params[:user_email]}
-    post_info = {
-        "subject" => params[:post_subject],
-        "body" => params[:post_body],
-        "source" => "portal",
-        "source_id" => "post-#{Time.now.utc.to_i}@woodenfish.hulu.com"
-    }
-    feed_impl(user_info, post_info)
-  end
-
-  # NOTE: for easier debugging
   def add_notification
     post_id = params[:post_id]
     Resque.enqueue(Tasks::NewPostNotification, post_id)
@@ -137,7 +125,7 @@ class PostsController < LoginController
     user_info["email"] = params["user_email"] if params["user_email"]
     post_info = {
       "source" => "portal",
-      "source_id" => "post-#{Time.now.utc.to_i.to_s}@woodenfish.hulu.com"
+      "source_id" => "post-#{Time.now.utc.to_i.to_s}@woodenfish"
     }.merge(params["post"] || {})
     post_info["subject"] = params["post_subject"] if params["post_subject"]
     post_info["body"] = params["post_body"] if params["post_body"]

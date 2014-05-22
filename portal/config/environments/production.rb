@@ -78,27 +78,32 @@ Wf::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  # TODO setup mail server
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      address:              'smtp.els.hulu.com',
-      port:                 25
+      #address:              'smtp.els.hulu.com',
+      #port:                 25
   }
-  config.notify_from_alias = "woodenfish@hulu.com"
-  config.portal_root = "http://woodenfish.prod.hulu.com/"
-  config.portal_host = "woodenfish.prod.hulu.com"
-  config.ga_id = "UA-48995483-1"
+  # TODO setup portol info, GA id
+  config.notify_from_alias = "woodenfish.dev@gmail.com"
+  config.portal_root = "http://woodenfish.unknown.com/"
+  config.portal_host = "woodenfish.unknown.com"
+  config.ga_id = nil
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.middleware.use ExceptionNotification::Rack,
     :email => {
       email_prefix: '[ERROR-WoodenFish] ',
-      sender_address: 'exceptions@hulu.com',
-      exception_recipients: 'woodenfish-dev@hulu.com'
+      sender_address: 'woodenfish.dev@gmail.com',
+      exception_recipients: 'woodenfish.dev@gmail.com'
     }
 end
 
-redis = Redis.new(
-  :host => "elsaplogbroker01.server.hulu.com", :port =>6379, :thread_safe => true)
-Resque.redis = Redis::Namespace.new(:wf_production, :redis => redis)
+#redis = Redis.new(
+#  :host => "elsaplogbroker01.server.hulu.com", :port =>6379, :thread_safe => true)
+#Resque.redis = Redis::Namespace.new(:wf_production, :redis => redis)
+
+# TODO setup redis fro resque
+redis = nil
 

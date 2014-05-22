@@ -15,7 +15,8 @@ common: &default_settings
   # You must specify the license key associated with your New Relic
   # account.  This key binds your Agent's data to your account in the
   # New Relic service.
-  license_key: '1218e012b3f12257613f69457a9564b962e3045b'
+  # TODO setup new relic
+  license_key: 'fake'
 
   # Agent Enabled (Ruby/Rails Only)
   # Use this setting to force the agent to run or not run.
@@ -217,6 +218,7 @@ test:
 production:
   <<: *default_settings
   monitor_mode: true
+  app_name: WoodenFish-open
 
 # Many applications have a staging environment which behaves
 # identically to production. Support for that environment is provided
@@ -224,4 +226,4 @@ production:
 staging:
   <<: *default_settings
   monitor_mode: true
-  app_name: WoodenFish-staging
+  app_name: WoodenFish-open-staging

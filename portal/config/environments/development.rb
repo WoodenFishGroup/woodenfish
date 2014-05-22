@@ -27,17 +27,15 @@ Wf::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
+  # TODO setup dev config
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      address:              'smtp.els.hulu.com',
-      port:                 25
+      address:              nil,
+      port:                 nil
   }
-  config.notify_from_alias = "woodenfish-staging@hulu.com"
-  config.portal_root = "http://woodenfish.staging.hulu.com/"
-  config.portal_host = "woodenfish.staging.hulu.com"
+  config.notify_from_alias = "woodenfish.dev@gmail.com"
+  config.portal_root = "http://woodenfish.staging.unknown.com/"
+  config.portal_host = "woodenfish.staging.unknonw.com"
   config.ga_id = "fake"
 end
 
-redis = Redis.new(
-  :host => "elsaplogbroker01.server.hulu.com", :port =>6379, :thread_safe => true)
-Resque.redis = Redis::Namespace.new(:wf_staging, :redis => redis)

@@ -1,6 +1,5 @@
 GEM
   remote: https://rubygems.org/
-  remote: http://gem.corp.hulu.com/
   specs:
     actionmailer (4.0.3)
       actionpack (= 4.0.3)
@@ -45,8 +44,6 @@ GEM
       activesupport (>= 3.0.4)
     execjs (2.0.2)
     hike (1.2.3)
-    hulu_sso (0.1.219)
-      json
     i18n (0.6.9)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
@@ -167,7 +164,6 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   exception_notification
   execjs
-  hulu_sso
   jbuilder (~> 1.2)
   jquery-rails
   less-rails

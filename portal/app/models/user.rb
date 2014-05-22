@@ -115,7 +115,7 @@ class User < ActiveRecord::Base
       name = query["name"] || get_name_from_email(query["email"])
       email = query["email"]
       User.create(:name => name, :email => email,
-                  :avartar => query_hulu_employee_avartar(name, email),
+                  :avartar => default_gravatar(email),
                   :created => Time.now.utc)
       user = query_user(query)
     end
@@ -142,16 +142,8 @@ class User < ActiveRecord::Base
     ((Time.now.utc - time) / (3600 * 24)).to_int
   end
 
-  def self.query_hulu_employee_avartar(name, email)
-    url = 'http://intranet.hulu.com/Contacts/GetContacts2.aspx?office=0'
-    params = {:search => name, :dir => "ASC", :start => 0, :limit => 999, :sort => "name"}
-    resp = Net::HTTP.post_form(URI.parse(url), params)
-    json = JSON.parse(resp.body)
-    #TODO find the most accurate one
-    if json["contacts"].size > 0
-      "http://intranet.hulu.com/#{json["contacts"][0]["photo_file_name"]}"
-    else
-      "http://www.gravatar.com/avatar/a"
-    end
+  def self.default_gravatar(email)
+    # TODO gravatar
+    "http://www.gravatar.com/avatar/a"
   end
 end

@@ -1,14 +1,15 @@
 class LoginController < ApplicationController
-  before_filter :cms_hulu_sso_login
+  before_filter :check_login
   before_filter :set_account
 
   private
 
   include HuluSSOLogin   
   include ApplicationHelper
-  def cms_hulu_sso_login
+  def check_login
     if not (params[:without_login] == "true")
-      return hulu_sso_verify(:hijack_protection => false)
+      # TODO complete login logic
+      return true
     end
   end
   

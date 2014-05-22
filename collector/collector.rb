@@ -12,14 +12,15 @@ require 'logger'
 # if it contains the parameter "mark", the message will be mark as "read"
 #
 
+# TODO setup portal config
 case ARGV[0]
 when "staging"
-  WF_PORTAL_HOST = "woodenfish.staging.hulu.com"
+  WF_PORTAL_HOST = "woodenfish.staging.unknown.com"
   WF_PORTAL_PORT = 80
   MAIL_SEARCH_KEYS = "UNSEEN OR TO woodenfish-staging CC woodenfish-staging"
 when "prod"
   # prod
-  WF_PORTAL_HOST = "woodenfish.prod.hulu.com"
+  WF_PORTAL_HOST = "woodenfish.prod.unknown.com"
   WF_PORTAL_PORT = 80
   MAIL_SEARCH_KEYS = "UNSEEN OR TO woodenfish CC woodenfish NOT OR TO woodenfish-staging CC woodenfish-staging"
 else
@@ -36,7 +37,7 @@ $logger.level = Logger::DEBUG
 Mail.defaults do
   retriever_method :imap, :address    => "exg5.exghost.com",
                           :port       => 993,
-                          :user_name  => 'wooden-fish-bot@hulu.com',
+                          :user_name  => 'wooden-fish-bot@unknown.com',
                           :password   => 'SECRET',
                           :enable_ssl => true
 end

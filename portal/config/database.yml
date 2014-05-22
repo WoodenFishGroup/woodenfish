@@ -1,19 +1,29 @@
 development:
   adapter: mysql2
-  host: els.hamysql.prod.hulu.com
-  username: hasql-woodenf_s
-  password: SmkGiRT5e5ViXqpxqcf4y
-  database: woodenf_s
+  host: fake
+  username: fake
+  password: fake
+  database: fake
   encoding: utf8
   pool: 5
   timeout: 5000
 
 staging:
   adapter: mysql2
-  host: els.hamysql.prod.hulu.com
-  username: hasql-woodenf_s
-  password: SmkGiRT5e5ViXqpxqcf4y
-  database: woodenf_s
+  host: fake
+  username: fake
+  password: fake
+  database: fake
+  encoding: utf8
+  pool: 5
+  timeout: 5000
+
+production:
+  adapter: mysql2
+  host: fake
+  username: fake
+  password: fake
+  database: fake
   encoding: utf8
   pool: 5
   timeout: 5000
@@ -27,12 +37,3 @@ test:
   pool: 5
   timeout: 5000
 
-production:
-  adapter: mysql2
-  host: els.hamysql.prod.hulu.com
-  username: hasql-woodenfish
-  password: SmkGiRT5e5ViXqpxqcf4y
-  database: woodenfish
-  encoding: utf8
-  pool: 5
-  timeout: 5000
