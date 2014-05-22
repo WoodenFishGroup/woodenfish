@@ -9,7 +9,7 @@ staging:
   pool: 5
   timeout: 5000
 
-prod:
+production:
   adapter: mysql2
   host: fake
   username: fake
