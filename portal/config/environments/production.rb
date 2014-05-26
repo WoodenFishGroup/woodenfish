@@ -81,8 +81,8 @@ Wf::Application.configure do
   # TODO setup mail server
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      #address:              'smtp.els.hulu.com',
-      #port:                 25
+      address:              nil,
+      port:                 nil
   }
   # TODO setup portol info, GA id
   config.notify_from_alias = "woodenfish.dev@gmail.com"
@@ -100,10 +100,6 @@ Wf::Application.configure do
     }
 end
 
-#redis = Redis.new(
-#  :host => "elsaplogbroker01.server.hulu.com", :port =>6379, :thread_safe => true)
-#Resque.redis = Redis::Namespace.new(:wf_production, :redis => redis)
-
-# TODO setup redis fro resque
+# TODO setup redis for resque
 redis = nil
 

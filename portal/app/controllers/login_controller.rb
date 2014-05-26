@@ -4,7 +4,6 @@ class LoginController < ApplicationController
 
   private
 
-  include HuluSSOLogin   
   include ApplicationHelper
   def check_login
     if not (params[:without_login] == "true")

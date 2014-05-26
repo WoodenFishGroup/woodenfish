@@ -15,7 +15,7 @@ class PostsController < LoginController
       params[:page] = count / POSTS_PER_PAGE + 1
       @post_id = params[:post_id].to_i
     end
-    @posts = Post.where("is_deleted=0")
+    @posts = Post.where("is_deleted=false")
         .includes(:user)
         .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
         .order("posts.id DESC")
@@ -24,7 +24,7 @@ class PostsController < LoginController
 
   def starred
     @posts = current_user.stared_posts
-      .where("is_deleted=0")
+      .where("is_deleted=false")
       .includes(:user)
       .includes(:stars)
       .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
@@ -35,7 +35,7 @@ class PostsController < LoginController
 
   def mine
     @posts = current_user.posts
-      .where("is_deleted=0")
+      .where("is_deleted=false")
       .includes(:user)
       .includes(:stars)
       .paginate(:page => params[:page], :per_page => POSTS_PER_PAGE)
@@ -100,9 +100,9 @@ class PostsController < LoginController
   end
 
   def send_summary
-    new_posts = Post.where(:is_deleted => 0).last(5)
-    new_comments = Comment.where(:is_deleted => 0).last(5)
-    top_posts = Post.where("stars_count>0 and is_deleted=0").order('stars_count desc').limit(10)
+    new_posts = Post.where(:is_deleted => false).last(5)
+    new_comments = Comment.where(:is_deleted => false).last(5)
+    top_posts = Post.where("stars_count>0 and is_deleted=false").order('stars_count desc').limit(10)
     NotificationMailer.summary(current_user, new_posts, new_comments, top_posts).deliver
     render :text => "ok"
   end

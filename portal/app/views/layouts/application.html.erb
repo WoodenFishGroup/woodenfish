@@ -140,14 +140,15 @@
             <b class="panel-title">Notification</b>
           </div>
           <div class="panel-body">
-            <%= check_box_tag 'new_post', '1', current_user.notify_policy.new_post_notify? %> New post
+            #TODO bring these back
+             #check_box_tag 'new_post', '1', current_user.notify_policy.new_post_notify?  New post
             <br/>
-            <%= check_box_tag 'new_comment', '1', current_user.notify_policy.new_comment_notify? %> New comment
+             #check_box_tag 'new_comment', '1', current_user.notify_policy.new_comment_notify?  New comment
             <br/>
-            <%= check_box_tag 'summary', '1', current_user.notify_policy.summary_notify? %> Daily summary at &nbsp;
+             #check_box_tag 'summary', '1', current_user.notify_policy.summary_notify?  Daily summary at &nbsp;
             <%= select_tag "timezone", "<option>CST</option><option>PST</option>".html_safe, :style => "width:100px" %>
             <% options = (0..23).to_a.map {|t| [t.to_s + ':00', t]} %>
-            <%= select_tag "time", options_for_select(options, (current_user.notify_policy.summary_send_time_in_day + get_timezone_offset('CST')) / 3600), :style => "width:100px" %>
+             #select_tag "time", options_for_select(options, (current_user.notify_policy.summary_send_time_in_day + get_timezone_offset('CST')) / 3600), :style => "width:100px" 
           </div>
         </div>
         <p>

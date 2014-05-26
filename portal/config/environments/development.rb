@@ -35,7 +35,7 @@ Wf::Application.configure do
   }
   config.notify_from_alias = "woodenfish.dev@gmail.com"
   config.portal_root = "http://woodenfish.staging.unknown.com/"
-  config.portal_host = "woodenfish.staging.unknonw.com"
+  config.portal_host = "woodenfish.staging.unknown.com"
   config.ga_id = "fake"
 end
 
