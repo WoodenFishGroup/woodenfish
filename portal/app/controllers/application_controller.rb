@@ -6,10 +6,14 @@ class ApplicationController < ActionController::Base
   # old: protect_from_forgery with: :exception
   skip_before_filter :verify_authenticity_token
 
-  after_filter :clear_current_user_and_sso
+  before_filter :configure_permitted_parameters, if: :devise_controller?
 
   protected
-  def info_has_all_values?(info, keys)
-    (info.values_at(*keys).index {|v| v.nil? || v == ""}).nil?
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :email, :password, :password_confirmation, :remember_me) }
+    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :name, :email, :password, :remember_me) }
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:name, :email, :password, :password_confirmation, :current_password) }
   end
+
 end

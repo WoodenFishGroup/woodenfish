@@ -140,15 +140,14 @@
             <b class="panel-title">Notification</b>
           </div>
           <div class="panel-body">
-            #TODO bring these back
-             #check_box_tag 'new_post', '1', current_user.notify_policy.new_post_notify?  New post
+            <%= check_box_tag 'new_post', '1', current_user.notify_policy.new_post_notify? %>  New post
             <br/>
-             #check_box_tag 'new_comment', '1', current_user.notify_policy.new_comment_notify?  New comment
+            <%= check_box_tag 'new_comment', '1', current_user.notify_policy.new_comment_notify? %>  New comment
             <br/>
-             #check_box_tag 'summary', '1', current_user.notify_policy.summary_notify?  Daily summary at &nbsp;
+            <%= check_box_tag 'summary', '1', current_user.notify_policy.summary_notify? %> Daily summary at &nbsp;
             <%= select_tag "timezone", "<option>CST</option><option>PST</option>".html_safe, :style => "width:100px" %>
             <% options = (0..23).to_a.map {|t| [t.to_s + ':00', t]} %>
-             #select_tag "time", options_for_select(options, (current_user.notify_policy.summary_send_time_in_day + get_timezone_offset('CST')) / 3600), :style => "width:100px" 
+            <% select_tag "time", options_for_select(options, (current_user.notify_policy.summary_send_time_in_day + get_timezone_offset('CST')) / 3600), :style => "width:100px" %>
           </div>
         </div>
         <p>
@@ -159,6 +158,8 @@
   </div>
   <div class="container" style="width:75%">
     <div class="relative" id="main-body">
+      <% if notice %> <p class="notice"><%= notice %></p> <% end %>
+      <% if alert %> <p class="alert"><%= alert %></p> <% end %>
       <%= yield %>
     </div>
   </div>
@@ -189,30 +190,12 @@
     contact_enabled: false,
     permalinks_enabled: false,
   }]);
-
   UserVoice.push(['addTrigger', { mode: 'smartvote', trigger_position: 'bottom-right' }]);
-  // Or, use your own custom trigger:
-  //UserVoice.push(['addTrigger', '#id', { mode: 'smartvote' }]);
-
-  // Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
   UserVoice.push(['autoprompt', {}]);
-
-  // Identify the user and pass traits
-  // To enable, replace sample data with actual user traits and uncomment the line
   UserVoice.push(['identify', {
     email:      '<%= get_current_user_email %>', // User’s email address
     name:       '<%= get_current_user_name %>', // User’s real name
-    //created_at: 1364406966, // Unix timestamp for the date the user signed up
     id:         <%= get_current_user_id %>, // Optional: Unique id of the user (if set, this should not change)
-    //type:       'Owner', // Optional: segment your users by type
-    //account: {
-    //  id:           123, // Optional: associate multiple users with a single account
-    //  name:         'Acme, Co.', // Account name
-    //  created_at:   1364406966, // Unix timestamp for the date the account was created
-    //  monthly_rate: 9.99, // Decimal; monthly rate of the account
-    //  ltv:          1495.00, // Decimal; lifetime value of the account
-    //  plan:         'Enhanced' // Plan name for the account
-    //}
   }]);
   </script>
   <script>

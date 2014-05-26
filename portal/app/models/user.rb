@@ -3,6 +3,10 @@ require 'net/http'
 require 'active_support/all'
 
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 
   has_many :stars
   has_many :stared_posts, :through => :stars, :source => :starable, :source_type => "Post"
@@ -66,8 +70,8 @@ class User < ActiveRecord::Base
 
   def score
     s = 0
-    posts = Post.where(:user_id => id, :is_deleted => 0).order("id desc")
-    comments = Comment.where(:user_id => id, :is_deleted => 0).order("id desc")
+    posts = Post.where(:user_id => id, :is_deleted => false).order("id desc")
+    comments = Comment.where(:user_id => id, :is_deleted => false).order("id desc")
     stars = Star.where(:user_id => id).order("id desc")
     posts.each do |p|
       s += [0, 20 + p.comments_count + p.stars_count - days_to_now(p.created)].max
@@ -87,12 +91,16 @@ class User < ActiveRecord::Base
     s.to_int
   end
 
+  def created
+    remember_created_at || Time.now.utc
+  end
+
   def posts_count
-    Post.where(:user_id => id, :is_deleted => 0).size
+    Post.where(:user_id => id, :is_deleted => false).size
   end
 
   def comments_count
-    Comment.where(:user_id => id, :is_deleted => 0).size
+    Comment.where(:user_id => id, :is_deleted => false).size
   end
 
   def stars_count
@@ -100,12 +108,10 @@ class User < ActiveRecord::Base
   end
 
   def self.find_new_post_notified_users
-    # TODO may need cache
     User.find(:all).select {|u| u.notify_policy.new_post_notify? }
   end
 
   def self.find_new_comment_notified_users
-    # TODO may need cache
     User.find(:all).select {|u| u.notify_policy.new_comment_notify? }
   end
 

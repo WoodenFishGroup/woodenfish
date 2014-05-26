@@ -1,9 +1,11 @@
 require 'resque/server'
 
 Wf::Application.routes.draw do
+  devise_for :users
+  root "posts#index"
+
   get  "/health_check" => "health_check#health_check"
 
-  root "posts#index"
   get "search" => "posts#search"
   put  "home/save_profile"
 

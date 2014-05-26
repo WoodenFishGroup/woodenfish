@@ -47,7 +47,8 @@ class Post < ActiveRecord::Base
 
   private
   def enqueue_notification
-    logger.info "enqueue new post"
-    Resque.enqueue(Tasks::NewPostNotification, id)
+    # TODO setup redis
+    #logger.info "enqueue new post"
+    #Resque.enqueue(Tasks::NewPostNotification, id)
   end
 end

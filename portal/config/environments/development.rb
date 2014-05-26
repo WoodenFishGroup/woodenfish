@@ -37,5 +37,6 @@ Wf::Application.configure do
   config.portal_root = "http://woodenfish.staging.unknown.com/"
   config.portal_host = "woodenfish.staging.unknown.com"
   config.ga_id = "fake"
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
 
