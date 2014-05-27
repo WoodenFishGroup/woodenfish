@@ -1,4 +1,5 @@
 require 'json'
+require 'digest'
 require 'net/http'
 require 'active_support/all'
 
@@ -91,6 +92,7 @@ class User < ActiveRecord::Base
     s.to_int
   end
 
+  # TODO assign created time
   def created
     remember_created_at || Time.now.utc
   end
@@ -149,7 +151,6 @@ class User < ActiveRecord::Base
   end
 
   def self.default_gravatar(email)
-    # TODO gravatar
-    "http://www.gravatar.com/avatar/a"
+    "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}"
   end
 end
