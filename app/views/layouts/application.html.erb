@@ -118,6 +118,7 @@
     </div>
   </div>
   <div class="modal fade" id="modal_user" style="top:10%;left:44%;width:59%;height:65%">
+    <% if not current_user.nil? %>
     <%= form_tag "home/save_profile", :id => "profile_form", :method => "PUT" do %>
       <div class="modal-header">
         <h3>Edit Profile</h3>
@@ -154,6 +155,7 @@
           <button id="save_profile" type="submit" class="btn btn-default">save</button>
         </p>
       </div>
+    <% end %>
     <% end %>
   </div>
   <div class="container" style="width:75%">
