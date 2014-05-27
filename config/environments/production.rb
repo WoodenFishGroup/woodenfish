@@ -98,8 +98,9 @@ Wf::Application.configure do
       sender_address: 'woodenfish.dev@gmail.com',
       exception_recipients: 'woodenfish.dev@gmail.com'
     }
+  # NOTE for debugging
+  config.assets.debug = true
 end
 
 # TODO setup redis for resque
-redis = nil
 
