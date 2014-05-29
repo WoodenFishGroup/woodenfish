@@ -33,10 +33,12 @@ Wf::Application.configure do
       address:              nil,
       port:                 nil
   }
-  config.notify_from_alias = "woodenfish.dev@gmail.com"
-  config.portal_root = "http://woodenfish.staging.unknown.com/"
-  config.portal_host = "woodenfish.staging.unknown.com"
-  config.ga_id = "fake"
+  config.admin_alias = ENV["admin_alias"]
+  config.notify_from_alias = config.admin_alias
+  config.portal_host = ENV["portal_host"] || "woodenfish.unknown.com"
+  config.portal_root = "http://#{config.portal_host}/"
+  config.ga_id = ENV["ga_id"]
+
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
 

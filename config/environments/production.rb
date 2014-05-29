@@ -84,21 +84,21 @@ Wf::Application.configure do
       address:              nil,
       port:                 nil
   }
-  # TODO setup portol info, GA id
-  config.notify_from_alias = "woodenfish.dev@gmail.com"
-  config.portal_root = "http://woodenfish.unknown.com/"
-  config.portal_host = "woodenfish.unknown.com"
-  config.ga_id = nil
+  config.admin_alias = ENV["admin_alias"]
+  config.notify_from_alias = config.admin_alias
+  config.portal_host = ENV["portal_host"] || "woodenfish.unknown.com"
+  config.portal_root = "http://#{config.portal_host}/"
+  config.ga_id = ENV["ga_id"]
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.middleware.use ExceptionNotification::Rack,
     :email => {
       email_prefix: '[ERROR-WoodenFish] ',
-      sender_address: 'woodenfish.dev@gmail.com',
-      exception_recipients: 'woodenfish.dev@gmail.com'
+      sender_address: config.admin_alias,
+      exception_recipients: config.admin_alias
     }
-  # NOTE for debugging
+  # NOTE this is for debugging
   config.assets.debug = true
 end
 
